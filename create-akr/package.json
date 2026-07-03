@@ -1,0 +1,8 @@
+{
+  "name": "create-akr",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": {
+    "create-akr": "./index.js"
+  }
+}
