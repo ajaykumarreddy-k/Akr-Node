@@ -1,8 +1,20 @@
 {
   "name": "create-akr",
-  "version": "1.0.0",
+  "version": "1.0.2",
+  "description": "AKR project generator",
   "type": "module",
+  "main": "index.js",
   "bin": {
-    "create-akr": "./index.js"
-  }
+    "create-akr": "./index.js",
+    "akr": "./index.js"
+  },
+  "keywords": [
+    "cli",
+    "bun",
+    "vite",
+    "template",
+    "react"
+  ],
+  "author": "Ajay Kumar Reddy",
+  "license": "MIT"
 }
