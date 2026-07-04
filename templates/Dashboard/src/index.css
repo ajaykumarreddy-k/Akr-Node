@@ -1,0 +1,84 @@
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+  --primary: 222.2 47.4% 11.2%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 222.2 84% 4.9%;
+  --radius: 0.5rem;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  background-color: #E8EEF3;
+  color: hsl(var(--foreground));
+  font-family: 'Product Sans', 'Google Sans', 'Inter', sans-serif;
+}
+
+/* Premium custom scrollbar styling */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent; 
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1; 
+    border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8; 
+}
+
+/* Elegant background design matching the premium card mesh style */
+.premium-bg {
+    background: linear-gradient(135deg, #DFE5ED 0%, #D1D9E5 100%);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+.premium-bg::before {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    right: -10%;
+    width: 130%;
+    height: 130%;
+    background-image: radial-gradient(#94a3b8 1.5px, transparent 1.5px);
+    background-size: 10px 10px;
+    opacity: 0.18;
+    transform: rotate(-12deg);
+    border-radius: 50%;
+}
+
+/* Elegant styling for Proposal Progress jagged lines */
+.progress-line {
+    width: 2px;
+    border-radius: 9999px;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.progress-line:hover {
+    transform: scaleY(1.1);
+    opacity: 0.85;
+    cursor: pointer;
+}
+.progress-line-grey { background-color: #CBD5E1; }
+.progress-line-orange { background-color: #E55B4C; }
+.progress-line-dark { background-color: #1E293B; }

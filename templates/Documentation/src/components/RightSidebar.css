@@ -1,0 +1,48 @@
+.right-sidebar {
+  width: 240px;
+  padding: 32px 24px;
+  overflow-y: auto;
+  flex-shrink: 0;
+  border-left: 1px solid var(--border-color); /* The original image has a very faint separator or just spacing. We'll stick to simple spacing if border not needed, but let's add a subtle border */
+  border-left: none; /* Actually, reference image doesn't show a hard border on the right sidebar */
+}
+
+.toc-nav {
+  position: sticky;
+  top: 32px;
+  padding-left: 8px;
+  border-left: 2px solid var(--border-color);
+}
+
+.toc-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  padding-left: 12px;
+}
+
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc-item {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  padding: 6px 12px;
+  transition: color 0.2s;
+}
+
+.toc-item:hover {
+  color: var(--text-primary);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 1024px) {
+  .right-sidebar {
+    display: none;
+  }
+}
