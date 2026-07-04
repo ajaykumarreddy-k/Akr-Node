@@ -1,6 +1,6 @@
 {
   "name": "create-akr",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "AKR project generator",
   "type": "module",
   "main": "index.js",

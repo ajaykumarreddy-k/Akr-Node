@@ -9,6 +9,8 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+
+
 const LEFT_W = 64; // inner width of left column
 const RIGHT_W = 20; // inner width of right column
 const FULL_W = LEFT_W + 1 + RIGHT_W - 2; // inner width for full-span rows (logo)
@@ -47,23 +49,36 @@ const LOGO = [
   "╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝",
 ];
 
-let lastRenderLines = 0;
+let currentDashboardArgs = null;
+let isInteractive = true;
 
-// Renders logo + table as ONE continuous box. `infoRows` is an array of
-// [left, right] pairs that fill the info section, so the live input /
-// selection can be drawn as real rows inside the same border.
-function renderDashboard({
-  projectName = "-",
-  template = "-",
-  status = "Waiting",
-  version = "1.0.3",
-  progress = 0,
-  infoRows = null,
-}) {
-  if (lastRenderLines > 0) {
-    readline.moveCursor(process.stdout, 0, -lastRenderLines);
+// Enter alternate screen buffer and hide cursor
+if (process.stdout.isTTY) {
+  process.stdout.write("\x1b[?1049h\x1b[?25l");
+}
+
+function renderDashboard(args) {
+  currentDashboardArgs = args;
+
+  if (isInteractive) {
+    readline.cursorTo(process.stdout, 0, 0);
     readline.clearScreenDown(process.stdout);
   }
+
+  if (process.stdout.isTTY && (process.stdout.columns < 87 || process.stdout.rows < 22)) {
+    const msg = chalk.red(`❌ Terminal too small (${process.stdout.columns}x${process.stdout.rows}). Please resize to at least 87x22.`);
+    process.stdout.write(msg + "\n");
+    return;
+  }
+
+  const {
+    projectName = "-",
+    template = "-",
+    status = "Waiting",
+    version = "1.0.3",
+    progress = 0,
+    infoRows = null,
+  } = args;
 
   const nextSteps = [`cd ${projectName}`, "bun install", "bun run dev"];
   const barCharWidth = LEFT_W - 2 - 7;
@@ -76,8 +91,7 @@ function renderDashboard({
     infoRows || [
       [`Project : ${projectName}`, nextSteps[0]],
       [`Template: ${template}`, nextSteps[1]],
-      [`Theme   : Dark`, nextSteps[2]],
-      [`Status  : ${status}`, ""],
+      [`Status  : ${status}`, nextSteps[2]],
     ];
 
   const lines = [];
@@ -95,7 +109,6 @@ function renderDashboard({
   lines.push(bottomBorder());
   const output = lines.join("\n") + "\n";
   process.stdout.write(output);
-  lastRenderLines = lines.length;
 }
 
 // Wire the keypress translator ONCE, globally. Calling emitKeypressEvents
@@ -105,6 +118,11 @@ function renderDashboard({
 if (process.stdin.isTTY) {
   readline.emitKeypressEvents(process.stdin);
   process.stdin.setRawMode(true);
+}
+if (process.stdout.isTTY) {
+  process.stdout.on("resize", () => {
+    if (currentDashboardArgs) renderDashboard(currentDashboardArgs);
+  });
 }
 process.stdin.resume();
 
@@ -119,6 +137,7 @@ function promptText({ label, defaultValue, draw }) {
     const onKey = (str, key) => {
       if (key.ctrl && key.name === "c") {
         cleanup();
+        if (process.stdout.isTTY) process.stdout.write("\x1b[?1049l\x1b[?25h");
         process.exit(0);
       } else if (key.name === "return") {
         cleanup();
@@ -153,6 +172,7 @@ function promptSelect({ choices, draw }) {
     const onKey = (str, key) => {
       if (key.ctrl && key.name === "c") {
         cleanup();
+        if (process.stdout.isTTY) process.stdout.write("\x1b[?1049l\x1b[?25h");
         process.exit(0);
       } else if (key.name === "up") {
         idx = (idx - 1 + choices.length) % choices.length;
@@ -196,18 +216,57 @@ const template = await promptSelect({
     name: t.default ? `${t.name} (Default)` : t.name,
     id: t.id,
   })),
-  draw: (idx) =>
+  draw: (idx) => {
+    const leftLines = [
+      `Project : ${projectName}`,
+      `Template:`,
+      ...templateNames.map((name, i) => {
+        if (i === idx) {
+          return chalk.cyan(`  ❯ ${name}`.padEnd(LEFT_W - 2));
+        }
+        return `    ${name}`;
+      }),
+      ``,
+      `Status  : Use ↑/↓ + Enter`
+    ];
+
+    const rows = leftLines.map((left, i) => [left, nextSteps[i] || ""]);
+
     renderDashboard({
       projectName,
       status: "Selecting Template",
       progress: 35,
-      infoRows: [
-        [`Project : ${projectName}`, nextSteps[0]],
-        [`Template: ${templateNames[idx]}`, nextSteps[1]],
-        ["Theme   : Dark", nextSteps[2]],
-        ["Status  : Use ↑/↓ + Enter", ""],
-      ],
-    }),
+      infoRows: rows,
+    });
+  },
+});
+
+// --- Step 3: ask for skills ---
+const addSkills = await promptSelect({
+  choices: [
+    { name: "Yes", value: true, default: true },
+    { name: "No", value: false },
+  ],
+  draw: (idx) => {
+    const leftLines = [
+      `Project : ${projectName}`,
+      `Template: ${template.name}`,
+      `Add AKR Design Skills?`,
+      idx === 0 ? chalk.cyan(`  ❯ Yes`.padEnd(LEFT_W - 2)) : `    Yes`,
+      idx === 1 ? chalk.cyan(`  ❯ No`.padEnd(LEFT_W - 2)) : `    No`,
+      ``,
+      `Status  : Use ↑/↓ + Enter`
+    ];
+
+    const rows = leftLines.map((left, i) => [left, nextSteps[i] || ""]);
+
+    renderDashboard({
+      projectName,
+      status: "Configuring Skills",
+      progress: 50,
+      infoRows: rows,
+    });
+  },
 });
 
 renderDashboard({
@@ -220,6 +279,17 @@ renderDashboard({
 const templatePath = path.resolve(__dirname, "../../templates", template.id);
 cpSync(templatePath, projectName, { recursive: true });
 
+if (addSkills.value) {
+  const skillPath = path.resolve(__dirname, "../../Skill-Perfection");
+  cpSync(skillPath, path.join(projectName, "Skill-Perfection"), { recursive: true });
+}
+
+isInteractive = false;
+if (process.stdout.isTTY) {
+  process.stdout.write("\x1b[?1049l\x1b[?25h"); // Exit alternate screen and show cursor
+}
+
+// Print the final dashboard state normally so it stays in the user's terminal history
 renderDashboard({
   projectName,
   template: template.name,
