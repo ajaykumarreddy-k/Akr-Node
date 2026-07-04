@@ -1,8 +1,8 @@
 ---
 name: akr-inspo-design
-version: 1.1.0
+version: 1.4.0
 last_updated: 2026-07-04
-description: "Pulls UI reference components, animations, design-principle docs, and full-site designs from Ajay's personal repo (github.com/ajaykumarreddy-k/AKR-Inspo), layers in Leonxlnx/taste-skill's anti-slop design taste rules, scaffolds new projects via `bun create akr` with a picked top-300 reference design + font pairing, implements chosen components directly in the user's project, and runs a full SEO/AEO/GEO discoverability audit+fix ONLY when explicitly asked. Before touching any code, requires scanning the full project and, if requirements are unclear, asking for a PRD/requirements before implementing. After any implementation, writes/updates `akr-design.md` in the project root explaining exactly what changed and why. Trigger ONLY for: UI implementation requests, component generation, site/page redesign, animation requests, template scaffolding (`bun create akr`), or explicit SEO/AEO/GEO audit requests. Do NOT trigger for: general design discussion, feedback on existing UI, color-palette questions, or plain frontend debugging with no build/redesign ask."
+description: "Pulls UI reference components, animations, design-principle docs, and full-site designs from Ajay's personal repo (github.com/ajaykumarreddy-k/AKR-Inspo), layers in Leonxlnx/taste-skill's anti-slop design taste rules, scaffolds new projects via `bun create akr` with a picked top-300 reference design + font pairing, implements chosen components directly in the user's project, and runs a full SEO/AEO/GEO discoverability audit+fix ONLY when explicitly asked. Before touching any code, requires a scoped project scan (max depth 3, config + relevant files only) and, if requirements are unclear, asking for a PRD/requirements before implementing. After any implementation, writes/updates `akr-design.md` in the project root explaining exactly what changed and why. Trigger ONLY for: UI implementation requests, component generation, site/page redesign, animation requests, template scaffolding (`bun create akr`), or explicit SEO/AEO/GEO audit requests. Do NOT trigger for: general design discussion, feedback on existing UI, color-palette questions, or plain frontend debugging with no build/redesign ask."
 ---
 
 # AKR-Inspo Design Skill
@@ -25,12 +25,23 @@ Never touch the repo, scaffold a project, or write SEO files before this.
 
 1. **Scan the project structure safely (max depth 3).** Read only core config files (`package.json`, `tailwind.config.ts`, `globals.css`, etc.) and the specific files tied to the requested route/component. Do not ingest the entire file tree — that causes context collapse and slows everything down for no benefit.
 2. **Check for a PRD/requirements doc** (`PRD.md`, `README.md`, `requirements.md`, `design.md`, `docs/`). Read it fully if present.
-3. **If none exists AND the ask is non-trivial** (new project, redesign, multi-component, brand/UX/SEO implications) — stop and ask: project purpose + audience, existing brand colors/fonts, exact component(s) wanted, must-keep elements, and (if SEO mentioned) production domain.
-4. **Skip asking only when unambiguous** — exact folder/component named, design system already obvious, single scoped component. Even then state assumptions inline.
-5. Only proceed once context is solid.
-6. **Brand extraction** (alongside the scan, not separately): pull primary color, accent color, typography, product category, target audience, and existing design language if any exists. An existing brand always wins over an imported reference — use references to fill gaps, not override what's already there.
+3. **Answer this checklist explicitly, out loud, before writing any code or fetching anything:**
+   - Is there a PRD/requirements doc, OR did the user's own message already state: what this is for, who it's for, and which exact component/page is wanted? (yes/no)
+   - Is there an existing, inspectable brand/design system in the project (colors, fonts, tokens already defined)? (yes/no)
+   - Is the request a single, narrowly-named component (e.g. "add the pricing card from Components-maintiles"), not a redesign or new project? (yes/no)
 
-Hard gate: no repo fetch, no scaffold, no SEO files while requirements are still ambiguous.
+   **If all three are "no," or the ask is a new project/redesign/multi-component build with none of the above present: STOP HERE.** Do not scaffold, fetch, or write code in this turn. Output only the clarifying questions below and end your turn — wait for the user's reply before continuing:
+   - What is this project/page for, and who's the user?
+   - Any existing brand colors, fonts, or design language to match?
+   - Which exact component(s)/section(s) do you want?
+   - Any must-avoid patterns or must-keep existing elements?
+   - (If SEO/AEO/GEO was mentioned) What's the production domain?
+
+   **Proceed without asking only if at least one checklist item is a genuine "yes"** — and even then, state which one and state your assumptions for the rest inline before implementing.
+4. Only proceed to Step 1 once this gate is cleared.
+5. **Brand extraction** (alongside the scan, not separately): pull primary color, accent color, typography, product category, target audience, and existing design language if any exists. An existing brand always wins over an imported reference — use references to fill gaps, not override what's already there.
+
+Hard gate: no repo fetch, no scaffold, no SEO files while the checklist in point 3 above isn't cleared. This is a mechanical stop, not a suggestion — "the request seemed clear enough" is not a valid reason to skip it.
 
 ## Step 1 — New project bootstrap (`bun create akr`)
 Output is a base template only — not a finished product. Keep it minimal:
@@ -42,7 +53,7 @@ Output is a base template only — not a finished product. Keep it minimal:
 **AKR package awareness:** when scaffolding, prefer components/tokens/primitives already present in the template over pulling new ones. Reuse existing design tokens, animation primitives, and layout primitives before fetching anything from AKR-Inspo or React Bits. Don't duplicate functionality the scaffold already provides.
 
 ## Step 2 — Fetch design taste rules (Leonxlnx/taste-skill) + AKR Identity Layer
-Layer these rules on top of anything pulled from AKR-Inspo — they govern *how* components are adapted, not what's fetched:
+Layer these rules on top of anything pulled from AKR-Inspo or React Bits — they govern *how* components are adapted, not what's fetched:
 - Infer page kind + audience + vibe from the brief before writing any code; state it in one line ("Reading this as: <page kind> for <audience>, <vibe> language, leaning toward <aesthetic family>").
 - Dual-mode by default: open every page in light and dark, keep contrast/hierarchy parity between both.
 - No pure `#000000` / `#ffffff` — use off-black/off-white for depth.
@@ -76,7 +87,7 @@ Speed rules: never list the whole tree recursively, never re-list a folder alrea
 2. If none, ask the user for the specific component path or to paste the code directly.
 3. If neither is possible, fall back to building from the design-taste rules in Step 2 and the design-md principles in Step 4 alone — don't stall the task waiting on network access.
 
-**Secondary source — React Bits (React projects only):** for animated text/background/UI components in a React stack, `reactbits.dev` (repo: `DavidHDev/react-bits`) is a well-maintained fit — use it when AKR-Inspo doesn't have a matching component, or when the user asks for a React-specific animation. It ships 4 variants (JS-CSS, JS-TW, TS-CSS, TS-TW) — pick the variant matching the project's actual JS/TS + styling setup rather than converting after the fact. Browse the same way: Contents API on the repo, drill into `src/content` (JS-CSS), `src/tailwind` (JS-TW), `src/ts-default` (TS-CSS), or `src/ts-tailwind` (TS-TW) depending on variant needed. Do not use this for non-React projects.
+**Secondary source — React Bits (React projects only, actively used, not just fallback):** for animated text/background/UI components in a React stack, `reactbits.dev` (repo: `DavidHDev/react-bits`) is a well-maintained fit. On any React implementation task, pick a few relevant React Bits components alongside AKR-Inspo ones (e.g. AKR-Inspo for layout/hero/section structure, React Bits for text/scroll/hover micro-animations) rather than treating it as only a fallback when AKR-Inspo has nothing — the two are meant to be combined. It ships 4 variants (JS-CSS, JS-TW, TS-CSS, TS-TW) — pick the variant matching the project's actual JS/TS + styling setup rather than converting after the fact. Browse the same way: Contents API on the repo, drill into `src/content` (JS-CSS), `src/tailwind` (JS-TW), `src/ts-default` (TS-CSS), or `src/ts-tailwind` (TS-TW) depending on variant needed. Do not use this for non-React projects.
 
 ## Step 4 — Map request → folder
 | User wants | Folder |
@@ -91,7 +102,7 @@ Speed rules: never list the whole tree recursively, never re-list a folder alrea
 | Top-300-sites design reference | `assets/images` |
 | Fonts | `assets/Fonts` |
 | Gradients | `Resource-Boy-Retro-Photoshop-Gradients/` |
-| React-specific animated component, no AKR-Inspo match | `DavidHDev/react-bits` (see Step 3 secondary source) — React projects only |
+| React-specific animation/micro-interaction (text, hover, scroll, background) | `DavidHDev/react-bits` (see Step 3 secondary source) — combine with AKR-Inspo on React projects, not fallback-only |
 
 Unsure which folder fits → `ls` the closest 2-3 candidates, skim filenames, pick.
 
@@ -112,13 +123,14 @@ Before writing any code, state confidence level and act accordingly:
 - **Low** — no matching reference, a major redesign is implied, or requirements are still missing → stop and ask before writing code, don't guess your way through a low-confidence build.
 
 ## Step 7 — Implement directly in the user's project
+On React projects, this step must draw on all three together — AKR-Inspo (layout/structure/full-section references), React Bits (a few picked micro-animation/text/hover components), and the Step 2 taste rules (governing how everything is styled/toned) — not any one in isolation.
 1. Detect actual stack from `package.json`/existing components — framework, styling system, JS/TS.
-2. Rewrite fetched code to match that stack's conventions.
+2. Rewrite fetched code (from AKR-Inspo and/or React Bits) to match that stack's conventions.
 3. Install missing deps via the project's package manager — but apply dependency guardrails first: never add a new dependency if a native browser API already solves it, an existing project dependency already covers it, or the needed utility is under ~50 lines of code to write directly. Prefer fewer dependencies over convenience installs.
 4. Copy needed assets into the project's own asset folder (don't reference the repo path).
 5. Wire into the actual page/route being worked on.
 6. Keep the original's visual polish (spacing, easing, color treatment) but reskin to the user's brand if one exists, applying Step 2's taste rules throughout.
-7. **Performance budget** — avoid stacking multiple animation libraries in one project, avoid Three.js/WebGL for purely decorative effects, avoid large video backgrounds, keep font payload under 100KB. Target Lighthouse 90+, CLS < 0.1, LCP < 2.5s. Don't let AKR-Inspo's flashier references (GSAP/Three.js/WebGL pieces) turn an ordinary page into a GPU benchmark — use them only when the brief actually calls for that level of spectacle.
+7. **Performance budget** — avoid stacking multiple animation libraries in one project, avoid Three.js/WebGL for purely decorative effects, avoid large video backgrounds, keep font payload under 100KB. Target Lighthouse 90+, CLS < 0.1, LCP < 2.5s. Don't let AKR-Inspo's flashier references (GSAP/Three.js/WebGL pieces) or React Bits animations turn an ordinary page into a GPU benchmark — use them only when the brief actually calls for that level of spectacle.
 
 ## Step 8 — SEO / AEO / GEO Compliance (only when explicitly requested — never auto-triggers)
 Run this step ONLY if the user asks for one of: SEO, AEO, GEO, AI search optimization, LLM/ChatGPT/Claude/Perplexity optimization, discoverability, better indexing, search ranking, "make it findable." Asking for AEO does not imply GEO or SEO or vice versa — if the user's intent spans more than one, confirm which before doing extra work; don't assume one term auto-triggers the others. Never run as part of ordinary UI work. If domain/production URL is unknown, ask first.

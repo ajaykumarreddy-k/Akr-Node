@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import fs from "fs";
 import path from "path";
-import { cpSync } from "fs";
+import { downloadTemplate } from "giget";
 import chalk from "chalk";
 import readline from "readline";
 import { fileURLToPath } from "url";
@@ -193,8 +193,15 @@ function promptSelect({ choices, draw }) {
   });
 }
 
-const templatesPath = path.resolve(__dirname, "../../templates/templates.json");
-const templates = JSON.parse(fs.readFileSync(templatesPath, "utf8"));
+let templates;
+try {
+  const res = await fetch("https://raw.githubusercontent.com/ajaykumarreddy-k/Akr-Node/main/templates/templates.json");
+  if (!res.ok) throw new Error("Fetch failed");
+  templates = await res.json();
+} catch (e) {
+  const templatesPath = path.resolve(__dirname, "./templates.json");
+  templates = JSON.parse(fs.readFileSync(templatesPath, "utf8"));
+}
 
 // --- Step 1: project name, typed live inside the table ---
 const projectName = await promptText({
@@ -272,16 +279,24 @@ const addSkills = await promptSelect({
 renderDashboard({
   projectName,
   template: template.name,
-  status: "Creating Project",
+  status: "Creating Project (Downloading...)",
   progress: 70,
 });
 
-const templatePath = path.resolve(__dirname, "../../templates", template.id);
-cpSync(templatePath, projectName, { recursive: true });
+await downloadTemplate(`github:ajaykumarreddy-k/Akr-Node/templates/${template.id}`, {
+  dir: projectName
+});
 
 if (addSkills.value) {
-  const skillPath = path.resolve(__dirname, "../../Skill-Perfection");
-  cpSync(skillPath, path.join(projectName, "Skill-Perfection"), { recursive: true });
+  renderDashboard({
+    projectName,
+    template: template.name,
+    status: "Adding AKR Design Skills...",
+    progress: 85,
+  });
+  await downloadTemplate(`github:ajaykumarreddy-k/Akr-Node/Skill-Perfection`, {
+    dir: path.join(projectName, "Skill-Perfection")
+  });
 }
 
 isInteractive = false;
