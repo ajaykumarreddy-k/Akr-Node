@@ -11,12 +11,10 @@
     "lint:fix": "eslint src --ext ts,tsx --fix"
   },
   "dependencies": {
-    "clsx": "^2.1.1",
     "framer-motion": "^12.0.0",
     "lucide-react": "^0.473.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "tailwind-merge": "^2.6.0",
     "tailwindcss": "^4.0.0"
   },
   "devDependencies": {

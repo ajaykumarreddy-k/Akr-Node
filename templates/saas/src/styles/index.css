@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-white text-[#111111] antialiased m-0 min-h-screen selection:bg-blue-600 selection:text-white overflow-x-hidden;
+    font-family: 'Google Sans', 'Inter', system-ui, sans-serif;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight font-semibold text-slate-900;
+  }
+}
+
+@layer utilities {
+  .hero-gradient {
+    background: linear-gradient(
+        180deg, 
+        #101826 0%,
+        #4A7097 22%,
+        #94B5D0 42%,
+        #F3E9C7 70%,
+        #FFFFFF 100%
+    );
+  }
+
+  .footer-gradient {
+    background: linear-gradient(
+        180deg, 
+        #FFFFFF 0%,
+        #FCE7C5 20%,
+        #E8874E 45%,
+        #823214 65%,
+        #23110A 85%,
+        #130906 100%
+    );
+  }
+
+  .newsletter-gradient {
+    background: linear-gradient(90deg, #F9FAFB 0%, #FFF5EF 50%, #FFE5CD 100%);
+  }
+
+  .img-hover-zoom {
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  .img-container:hover .img-hover-zoom {
+    transform: scale(1.04);
+  }
+  
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border-b border-white/20 shadow-sm;
+  }
+
+  .nav-tab::before,
+  .nav-tab::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+    background-size: 100% 100%;
+  }
+  .nav-tab::before {
+    left: -24px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M0 0C13.2548 0 24 10.7452 24 24V0H0Z' fill='%2318181b'/%3E%3C/svg%3E");
+  }
+  .nav-tab::after {
+    right: -24px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M24 0C10.7452 0 0 10.7452 0 24V0H24Z' fill='%2318181b'/%3E%3C/svg%3E");
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

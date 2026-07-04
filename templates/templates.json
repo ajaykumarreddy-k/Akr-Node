@@ -1,0 +1,23 @@
+[
+  {
+    "id": "saas",
+    "name": "SaaS",
+    "default": true
+  },
+  {
+    "id": "dashboard",
+    "name": "Dashboard"
+  },
+  {
+    "id": "documentation",
+    "name": "Documentation"
+  },
+  {
+    "id": "portfolio",
+    "name": "Portfolio"
+  },
+  {
+    "id": "ecommerce",
+    "name": "Ecommerce"
+  }
+]
