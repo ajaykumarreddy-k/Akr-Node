@@ -1,6 +1,6 @@
 {
   "name": "create-akr",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "AKR project generator",
   "type": "module",
   "main": "index.js",
@@ -19,6 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "@inquirer/prompts": "^8.5.2",
+    "boxen": "^8.0.1",
     "chalk": "^5.6.2",
     "cli-progress": "^3.12.0",
     "figlet": "^1.11.0"
