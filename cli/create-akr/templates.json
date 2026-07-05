@@ -19,5 +19,17 @@
   {
     "id": "ecommerce",
     "name": "Ecommerce"
+  },
+  {
+    "id": "bun-basic",
+    "name": "Bun (Basic)"
+  },
+  {
+    "id": "bun-react",
+    "name": "Bun + React"
+  },
+  {
+    "id": "bun-react-tailwind",
+    "name": "Bun + React + Tailwind"
   }
 ]
