@@ -1,8 +1,8 @@
 ---
 name: akr-inspo-design
-version: 2.4.0
+version: 3.0.0
 last_updated: 2026-07-05
-description: "Pulls UI reference components, animations, design-principle docs, and full-site designs from Ajay's personal repo (github.com/ajaykumarreddy-k/AKR-Inspo), layers in Leonxlnx/taste-skill's anti-slop design taste rules plus an AKR creative-direction layer (concept extraction, anti-SaaS detection, signature components), scaffolds new projects via `bun create akr` with a picked top-300 reference design + font pairing, implements chosen components directly in the user's project, and runs a full SEO/AEO/GEO discoverability audit+fix ONLY when explicitly asked. Before touching any code, requires a scoped project scan and, if requirements are unclear, asking for a PRD/requirements before implementing. Requires a concept/creative-direction pass before any layout or component is chosen — layout is never the starting point. After any implementation, writes/updates `akr-design.md` in the project root explaining exactly what changed and why. Trigger ONLY for: UI implementation requests, component generation, site/page redesign, animation requests, template scaffolding (`bun create akr`), or explicit SEO/AEO/GEO audit requests. Do NOT trigger for: general design discussion, feedback on existing UI, color-palette questions, or plain frontend debugging with no build/redesign ask."
+description: "Pulls UI reference components, animations, design-principle docs, and full-site designs from Ajay's personal repo (github.com/ajaykumarreddy-k/AKR-Inspo), layers in Leonxlnx/taste-skill's anti-slop design taste rules plus an AKR creative-direction layer (concept extraction, world logic/section/feature-translation engine, typography intelligence with Fontjoy, anti-SaaS detection, signature components), scaffolds new projects via `bun create akr` with a picked top-300 reference design + font pairing, implements chosen components directly in the user's project, and runs a full SEO/AEO/GEO discoverability audit+fix ONLY when explicitly asked. Before touching any code, requires a scoped project scan and, if requirements are unclear, asking for a PRD/requirements before implementing. Requires a concept/world/typography pass before any layout or component is chosen — layout is never the starting point. After any implementation, writes/updates `akr-design.md` in the project root explaining exactly what changed and why. Trigger ONLY for: UI implementation requests, component generation, site/page redesign, animation requests, template scaffolding (`bun create akr`), or explicit SEO/AEO/GEO audit requests. Do NOT trigger for: general design discussion, feedback on existing UI, color-palette questions, or plain frontend debugging with no build/redesign ask."
 ---
 
 # AKR-Inspo Design Skill
@@ -57,7 +57,7 @@ Hard gate: no repo fetch, no scaffold, no SEO files while the checklist in point
 Output is a base template only — not a finished product. Keep it minimal:
 1. Scaffold a runnable base template with placeholder/test data and content (dummy copy, sample images/text) filled into a working default layout. No real content, no extra features beyond the layout shell.
 2. Pick ONE reference design from `assets/images` (top-300-sites moodboard) matching the project category and Step 0 brief. State which one and why, one line. (Only read image metadata/filenames for reference — do not download heavy image assets into the base template.)
-3. Pick ONE font pairing from `assets/Fonts` matching that design's tone.
+3. Pick font pairing per the Typography Intelligence System below (not a flat pick from `assets/Fonts` alone — that library is one candidate source among several).
 4. Apply design + font to the base layout only — this is a starting point for the user to build on, not the final implementation.
 
 **AKR package awareness:** when scaffolding, prefer components/tokens/primitives already present in the template over pulling new ones. Reuse existing design tokens, animation primitives, and layout primitives before fetching anything from AKR-Inspo or React Bits. Don't duplicate functionality the scaffold already provides.
@@ -108,6 +108,42 @@ Visual Language: <typography/color/motion direction>
 ```
 Example — a package-manager dev tool ("NodeForge"): metaphor = digital forge; narrative = developers forge software from modules; signature object = package ingots; signature interaction = dependencies visually forging together.
 No implementation may begin before this is written out. Skip only when Step 0 already established a genuine single-component, brand-already-defined edit (per the Step 0 checklist) — in that case state the existing concept briefly instead of re-deriving it.
+
+## AKR World Engine (mandatory for full builds — determines content/structure before typography or creative direction)
+Answers "what belongs in this world and what doesn't." Runs immediately after Concept Extraction, before Typography or Creative Exploration. Skip for single scoped component edits (per Step 0's checklist) — apply only to full projects/redesigns. This stage decides content and structure only — it adds no scoring, audits, or SEO of its own; those stay in the AKR Quality Gate and Step 8.
+
+**Pipeline:** World Audit → World Logic Engine → Section Intelligence Engine → World Expansion → Feature Translation Engine → Missing Signature Opportunity Engine → Experience Expansion → World Density Test. Run in this order — don't jump to sections before the world's own logic is defined, or sections will drift from the metaphor.
+
+1. **World Audit** — check the Step 2.5 concept is concrete enough to build from: clear metaphor, a narrative arc, at least one signature object. If any is missing or vague, go back and sharpen Concept Extraction first.
+2. **World Logic Engine** — define the world's internal rules before inventing content: World Rules (what is/isn't possible in this metaphor), World Vocabulary (words this world uses instead of generic UI/business terms), World Objects (recurring nouns, e.g. NodeForge: raw material, blueprint, forge, artifact), World Systems (how objects transform/interact), World Relationships (how objects/systems relate to the user). Anything added later that breaks these rules — a page, component, section — gets redesigned or rejected. A "Corporate Team Section" breaks NodeForge's forge metaphor even though "most sites have one" — it doesn't belong.
+3. **Section Intelligence Engine** — never default to a fixed site structure (hero/features/testimonials/pricing/FAQ/footer just because it's typical). Determine sections from product type, audience, trust requirements, conversion requirements, the world's narrative, and industry expectations. Output three lists with reasons: **Required** (why each is required for this specific product/audience), **Optional** (worth considering, tradeoff stated), **Unnecessary** (explicitly excluded, why). For every section ask "why does this exist?" — if the honest answer is "most websites have it," delete it.
+4. **World Expansion** — extend the World Logic Engine's vocabulary/objects/systems to cover every required section, so each is expressible in world terms before feature translation.
+5. **Feature Translation Engine** — every generic feature must be translated into the world's vocabulary before it's built: Search → Scanner, Dashboard → Control Center, Comparison → Analysis Bench, Notifications → Signal Alerts, Collections → Archives (illustrative — translate per this world's own vocabulary). A feature left in generic terms hasn't been integrated into the world yet — translate it or reconsider whether it belongs.
+6. **Missing Signature Opportunity Engine** — originality comes from what the world implies but doesn't yet have, not from the requested feature list. Ask: what unique experiences are implied by this world's metaphor/vocabulary but don't exist yet? Generate candidate missing components, interactions, systems, experiences; prioritize originality. Example — a "Cosmos Lab" world with Planet Explorer and Mission Control implies but is missing: an Observatory, a Research Archive, Deep Space Missions, Discovery Logs.
+7. **Experience Expansion** — fold the best 1-3 highest-originality missing opportunities into the actual build plan, don't just list and move on. This is what makes the world feel larger than its current implementation.
+8. **World Density Test** — does the world feel thin (metaphor applied only to the hero) or dense (shows up in navigation, empty states, error messages, micro-copy, loading states)? Thin is a fail — pick 2-3 more touchpoints from Experience Expansion and apply the world there.
+
+**World-engine hard rules:**
+- Every page must contribute to the world; a page that doesn't reinforce the metaphor/narrative doesn't belong.
+- Every feature must have a world equivalent (per Feature Translation) — none ships in generic terms.
+- A user should be able to describe the world after using the product, not just list its features.
+- The world should feel larger than the current implementation (per Experience Expansion).
+- The best ideas are often implied rather than requested — the Missing Signature Opportunity Engine exists to find them, not just fulfill the literal brief.
+
+Hand the finalized section list (world-translated features + expanded signature opportunities) to Typography Intelligence and Step 2.6 next.
+
+## Typography Intelligence System (after Concept Extraction and World Engine, before Creative Exploration)
+Font selection is not "pick a nice pairing" — it runs through the same rigor as everything else:
+
+1. **Strategy** — from the Step 2.5 concept, extract brand personality, emotional tone, product category, trust level, energy level, audience expectations. Decide the roles needed: Display, Body, Data (numbers/tables), Utility (nav/buttons/labels) — and why each role exists for this product.
+2. **Pairing candidates** — generate 2-3 candidates from: existing brand fonts (if any, highest priority), the internal `assets/Fonts` library, Fontjoy (jackyeah's github.com/Jack000/fontjoy, or its live pairing tool) as a pairing assistant, or a custom pairing. Never blindly accept a Fontjoy-generated pairing — mathematical compatibility isn't the same as a strong pairing; validate every candidate against brand personality, narrative, visual language, audience, and accessibility before accepting it.
+3. **Score candidates** — Brand fit 40%, Readability 25%, Originality 15%, Accessibility 10%, Technical compatibility 10%. Select the highest score, state the pick and runner-up.
+4. **Typography ownership test** — mentally strip logo, colors, imagery, and motion. Does the product still feel distinctive from typography alone? If not, the pairing is too generic — go back to step 2 (candidates).
+5. **Hierarchy audit** — verify each level has a clear, distinct purpose: Display, Heading, Subheading, Body, Caption, Data, Code, Navigation, Buttons. Avoid unnecessary extra weights/sizes that don't serve a role.
+6. **Consistency + memorability** — every section must use the same type system (a section that looks like a different product's typography gets redesigned); and after 24 hours, would a user remember a distinctive typographic treatment, or only colors/graphics? Type should pull its own weight in the identity, not ride along.
+7. **Prefer variable fonts** when available — smaller payload, better performance, flexible hierarchy, more responsive. Only ship multiple static font files when the project genuinely needs weights/styles a variable font can't cover.
+
+Record the result in `akr-design.md` (Step 9) as a **Typography System** block: Display / Heading / Body / Code / Fallback fonts, pairing rationale, and the score from step 3 above.
 
 ## Step 2.6 — Creative Exploration Engine
 Before selecting any reference, generate three directions and evaluate each on originality, UX, memorability, brand alignment, and technical feasibility:
@@ -276,7 +312,7 @@ State the average and, if below 9.0, the single biggest reason why.
 ## Step 9 — Write akr-design.md and confirm
 Before declaring done:
 1. Re-check output against Step 0's gathered requirements and, for full builds, the AKR Quality Gate score — not just "does it look cool."
-2. Create or update `akr-design.md` in the project's root (main tree). For every component pulled from an external source, record its **provenance**: source repo, source path, adaptation summary (what changed from the original), and dependencies added. Also document: the Step 2.5 concept summary, confidence level from Step 6, which taste-skill/AKR Visual DNA rules were applied, the AKR Score if run, and — if Step 8 ran — the SEO validation results. This file exists so the user and any AI reading the project later can cross-verify what happened and why, without re-deriving it from git history.
+2. Create or update `akr-design.md` in the project's root (main tree). For every component pulled from an external source, record its **provenance**: source repo, source path, adaptation summary (what changed from the original), and dependencies added. Also document: the Step 2.5 concept summary, the World Engine's section list (required/optional/excluded, with reasons) and feature translations, the Typography System block, confidence level from Step 6, which taste-skill/AKR Visual DNA rules were applied, the AKR Score if run, and — if Step 8 ran — the SEO validation results. This file exists so the user and any AI reading the project later can cross-verify what happened and why, without re-deriving it from git history.
 3. Report the same summary briefly in chat, pointing to `akr-design.md` for detail. Don't over-explain in chat — the file holds the detail.
 
 ## Notes
