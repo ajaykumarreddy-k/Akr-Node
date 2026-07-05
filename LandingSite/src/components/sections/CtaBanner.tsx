@@ -47,8 +47,8 @@ export function CtaBanner() {
 
   return (
     <section ref={containerRef} className="bg-[#037cf9] text-white relative overflow-hidden z-20">
-      <div className="max-w-[1400px] mx-auto p-12 md:p-24 flex flex-col md:flex-row items-center justify-between gap-16 relative z-10">
-        
+      <div className="max-w-[87.5rem] mx-auto p-12 pr-40 md:p-24 flex flex-col md:flex-row items-center justify-between gap-16 relative z-10">
+
         <div ref={textRef} className="md:w-2/3 max-w-2xl">
           <h2 className="text-5xl md:text-7xl lg:text-[6rem] font-extrabold tracking-tight leading-[1.1] mb-8">
             Stop rebuilding<br />

@@ -10,9 +10,10 @@
     <img src="https://img.shields.io/badge/Design-System-FF69B4?style=for-the-badge&logo=figma&logoColor=white" alt="Design System" />
     <img src="https://img.shields.io/badge/UI%2FUX-Perfection-FF4500?style=for-the-badge&logo=framer&logoColor=white" alt="UI/UX Perfection" />
     <img src="https://img.shields.io/badge/SEO-Optimized-00C853?style=for-the-badge&logo=google&logoColor=white" alt="SEO Optimized" />
+    <img src="https://img.shields.io/badge/AEO_Score-100%2F100-00C853?style=for-the-badge&logo=google&logoColor=white" alt="AEO Score 100/100" />
   </p>
 
-  [Live Preview of Design System](https://akr-inspo.vercel.app/)
+  [Live Preview of Design System](https://akr-inspo.vercel.app/) • [Live Site](https://akr-node.vercel.app)
 </div>
 
 ---
@@ -32,6 +33,26 @@ It seamlessly matches your current tech stack, respects your brand guidelines, a
 - 🎨 **Anti-Slop Design Taste:** Layers in `Leonxlnx/taste-skill` rules (e.g., proper spacing, high contrast, elegant typography).
 - 🔍 **SEO/AEO/GEO Audits:** Runs comprehensive discoverability audits and implements fixes (ONLY when explicitly requested).
 - 📝 **Self-Documenting:** Automatically writes and updates `akr-design.md` in the root folder, explaining exactly *what* changed and *why*.
+
+---
+
+## 🏆 AEO Score Achievement
+
+This skill's AEO audit capabilities helped achieve a **perfect 100/100 AEO score** on the Akr landing site — placing it in the **Top 5%** of all sites scanned worldwide.
+
+<div align="center">
+  <img src="../AEOSCORE.png" alt="AEO Score 100/100 — Flawless. Go touch grass." width="340" />
+</div>
+
+| Category | Status |
+|----------|--------|
+| 🔍 **Findable** | ✅ Good |
+| 💬 **Quotable** | ✅ Good |
+| 🧠 **Understandable** | ✅ Good |
+| 🛡️ **Trustworthy** | ✅ Good |
+
+> *"Flawless. Go touch grass. Your site is doing the work for you. AI engines have nothing to complain about."*  
+> — AEO Report for [akr-node.vercel.app](https://akr-node.vercel.app)
 
 ---
 
@@ -80,5 +101,5 @@ When multiple design sources or instructions conflict, the skill prioritizes in 
 
 <br/>
 <p align="center">
-  <i>Perfecting UI, one component at a time.</i>
+  <i>Perfecting UI, one component at a time — and optimizing for the AI-first web.</i>
 </p>

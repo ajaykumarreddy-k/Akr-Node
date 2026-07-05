@@ -1,0 +1,11 @@
+# Akr Node Module & Skill Platform
+
+Akr is a premium developer tool and module ecosystem for Node.js. It provides high-performance templates and AI-powered workflow skills to scaffold, build, and deploy production-ready applications with cinematic visual aesthetics and top-tier performance.
+
+## Key Features
+- High performance Node.js templates
+- AI workflow skills for design perfection
+- Seamless deployment processes
+
+## Documentation
+Documentation can be found on our main site under the /#docs route.

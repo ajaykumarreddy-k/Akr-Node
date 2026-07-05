@@ -1,8 +1,8 @@
 import React from 'react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { 
-  Smile, Tag, Star, Clipboard, Pencil, 
+import {
+  Smile, Tag, Star, Clipboard, Pencil,
   Terminal, Package, Keyboard, Code, Sparkles, Rocket
 } from 'lucide-react';
 
@@ -10,8 +10,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export type StickerType = 
-  | 'smiley' | 'tag' | 'star' | 'clipboard' | 'pencil' 
+export type StickerType =
+  | 'smiley' | 'tag' | 'star' | 'clipboard' | 'pencil'
   | 'terminal' | 'package' | 'keyboard' | 'code' | 'rocket';
 
 interface StickerProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -49,12 +49,12 @@ const colorMap = {
 export function Sticker({ type, className, size = 48, rotation, ...props }: StickerProps) {
   const Icon = iconMap[type];
   const colorClass = colorMap[type];
-  
+
   // Deterministic fallback rotation based on type length if none provided
   const rot = rotation !== undefined ? rotation : (type.length * 5) % 24 - 12;
 
   return (
-    <div 
+    <div
       className={cn(
         "relative inline-flex items-center justify-center p-3 rounded-2xl shadow-md",
         "border-[6px] border-white bg-white transition-transform hover:scale-110",

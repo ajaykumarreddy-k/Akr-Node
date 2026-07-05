@@ -16,9 +16,17 @@
   </p>
 
   <p align="center">
+    <img src="https://img.shields.io/badge/AEO_Score-100%2F100-00C853?style=for-the-badge&logo=google&logoColor=white" alt="AEO Score 100/100" />
+    <img src="https://img.shields.io/badge/AI_Findable-✓ Good-00C853?style=for-the-badge" alt="AI Findable" />
+    <img src="https://img.shields.io/badge/AI_Trustworthy-✓ Good-00C853?style=for-the-badge" alt="AI Trustworthy" />
+  </p>
+
+  <p align="center">
     <a href="#-create-akr-cli">CLI</a> •
     <a href="#-templates">Templates</a> •
-    <a href="#-akr-designperfection-skill">AI Design Skill</a>
+    <a href="#-akr-designperfection-skill">AI Design Skill</a> •
+    <a href="#-landing-site">Landing Site</a> •
+    <a href="#-aeo-score">AEO Score</a>
   </p>
 </div>
 
@@ -26,11 +34,12 @@
 
 ## 🌟 Overview
 
-This repository is the central hub for the **Akr-Node** ecosystem. It is divided into three core pillars designed to accelerate your development workflow:
+This repository is the central hub for the **Akr-Node** ecosystem. It is divided into four core pillars designed to accelerate your development workflow:
 
 1. **`create-akr` CLI**: A powerful, interactive scaffolding tool.
 2. **AKR Templates**: A collection of high-quality, pre-configured starter templates.
 3. **AKR-Designperfection-Skill**: An advanced AI agent skill for UI/UX integration and design perfection.
+4. **Landing Site**: A production-deployed marketing site with a perfect 100/100 AEO score.
 
 ---
 
@@ -87,6 +96,36 @@ Located in `Skill-Perfection/`, the **AKR-Designperfection-Skill** is a speciali
 - **Self-Documenting:** Automatically logs its architectural decisions in `akr-design.md`.
 
 🔗 **[Read the full AI Skill Documentation](./Skill-Perfection/README.md)**
+
+---
+
+## 🌐 Landing Site
+
+The `LandingSite/` directory contains the official marketing and documentation site for the Akr ecosystem, live at **[akr-node.vercel.app](https://akr-node.vercel.app)**.
+
+- Built with **Bun + Parcel** for lightning-fast builds.
+- Includes `robots.txt`, `sitemap.xml`, and `llms.txt` for maximum discoverability.
+- Fully optimized for AI Engine Optimization (AEO), achieving a perfect score.
+
+---
+
+## 🏆 AEO Score
+
+The Akr landing site has achieved a **perfect 100/100 AEO (AI Engine Optimization) score**, placing it in the **Top 5%** of all scanned sites. Most sites score between 45–70.
+
+<div align="center">
+  <img src="./AEOSCORE.png" alt="AEO Score 100/100 — Flawless. Go touch grass." width="360" />
+</div>
+
+| Category | Status |
+|----------|--------|
+| 🔍 **Findable** | ✅ Good |
+| 💬 **Quotable** | ✅ Good |
+| 🧠 **Understandable** | ✅ Good |
+| 🛡️ **Trustworthy** | ✅ Good |
+
+> *"Flawless. Go touch grass. Your site is doing the work for you. AI engines have nothing to complain about."*
+> — AEO Report for [akr-node.vercel.app](https://akr-node.vercel.app)
 
 ---
 

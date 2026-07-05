@@ -39,7 +39,7 @@ export function Trust() {
     if (marqueeContent) {
       // Duplicate content for smooth infinite loop
       marqueeContent.innerHTML += marqueeContent.innerHTML;
-      
+
       gsap.to(marqueeContent, {
         xPercent: -50,
         ease: "none",
@@ -62,12 +62,12 @@ export function Trust() {
 
   return (
     <section ref={sectionRef} className="py-24 md:py-40 bg-black text-white border-t border-white/10 overflow-hidden relative">
-      <div className="max-w-[1400px] mx-auto px-8 mb-16 md:mb-24 text-center">
+      <div className="max-w-[87.5rem] mx-auto px-8 mb-16 md:mb-24 text-center">
         <h3 ref={titleRef} className="text-xl md:text-3xl font-medium tracking-wide text-gray-400">
           Trusted by developers at world-class teams
         </h3>
       </div>
-      
+
       <div ref={marqueeRef} className="w-full relative flex overflow-hidden">
         {/* Fades on the edges for a premium look */}
         <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none"></div>

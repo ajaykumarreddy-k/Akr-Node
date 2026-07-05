@@ -3,6 +3,11 @@ import index from "./index.html";
 
 const server = serve({
   routes: {
+    // Serve static AEO files
+    "/robots.txt": new Response(Bun.file("./robots.txt")),
+    "/sitemap.xml": new Response(Bun.file("./sitemap.xml")),
+    "/llms.txt": new Response(Bun.file("./llms.txt")),
+
     // Serve index.html for all unmatched routes.
     "/*": index,
 

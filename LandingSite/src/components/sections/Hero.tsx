@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Button } from '../ui/Button';
 import { Copy, Check } from 'lucide-react';
 import img0 from "../../../0.png";
+import logo from "../../../logo.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -38,6 +39,7 @@ export function Hero() {
   return (
     <section ref={containerRef} className="relative min-h-screen bg-[#037cf9] overflow-hidden flex flex-col justify-center pt-20">
       <div className="max-w-4xl mx-auto px-6 relative z-10 text-center md:text-left mt-16 md:mt-0">
+
         {/* Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -54,7 +56,7 @@ export function Hero() {
           transition={{ delay: 0.1 }}
           className="text-5xl md:text-7xl font-extrabold text-white leading-[1.1] tracking-tight mb-6"
         >
-          Ship your Websites in minutes.
+          Build production-ready<br className="hidden md:block" /> React websites in minutes.
         </motion.h1>
 
         <motion.p
@@ -65,6 +67,7 @@ export function Hero() {
         >
           The developer-first ecosystem: a production-ready npm starter and an AI coding skill that builds the "Akr way."
         </motion.p>
+
 
         {/* CTAs */}
         <motion.div
@@ -99,7 +102,7 @@ export function Hero() {
       </div>
 
       {/* Decorative Assets */}
-      <div className="absolute bottom-8 right-8 z-20 hover:scale-105 transition-transform duration-300">
+      <div className="absolute bottom-8 right-8 z-20 hover:scale-105 transition-transform duration-300 hidden md:block">
         <img ref={img0Ref} src={img0} alt="Sticker Icons" className="h-32 md:h-48 object-contain" />
       </div>
     </section>

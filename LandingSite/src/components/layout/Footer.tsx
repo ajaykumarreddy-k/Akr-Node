@@ -56,7 +56,7 @@ export function Footer() {
   }, { scope: footerRef });
 
   return (
-    <footer ref={footerRef} id="footer" className="bg-black text-white h-screen w-full relative overflow-hidden flex flex-col justify-between">
+    <footer ref={footerRef} id="footer" className="bg-black text-white min-h-screen w-full relative overflow-hidden flex flex-col justify-between">
       {/* Right Side Image (Brutalist massive graphic style) */}
       <div className="absolute right-0 top-0 bottom-0 w-[60%] md:w-1/2 flex justify-end items-end pointer-events-none z-20 overflow-visible">
         <img ref={imgRef} src={img2} alt="Signpost" className="w-auto h-[120%] md:h-[130%] object-contain object-right origin-bottom-right translate-y-[25%]" />
@@ -64,7 +64,7 @@ export function Footer() {
 
       {/* Top Section */}
       <div className="p-8 md:p-16 relative z-10">
-        <h2 ref={textRef} className="text-6xl md:text-8xl lg:text-[10rem] font-extrabold tracking-tighter uppercase leading-[0.85] max-w-[60%]">
+        <h2 ref={textRef} className="text-5xl md:text-7xl lg:text-[6rem] xl:text-[8rem] 2xl:text-[10rem] font-extrabold tracking-tighter uppercase leading-[0.85] max-w-[60%]">
           GET NODE<br />
           MODULE<br />
           AND SKILL
@@ -73,7 +73,7 @@ export function Footer() {
 
       {/* Bottom Section */}
       <div className="flex flex-col justify-end flex-grow relative z-10 pb-16 px-8 md:px-16">
-        <a ref={ctaRef} href="#" className="text-6xl md:text-8xl lg:text-[7rem] font-extrabold tracking-tight uppercase hover:text-[#037cf9] transition-colors inline-block w-fit origin-left">
+        <a ref={ctaRef} href="#" className="text-5xl md:text-7xl lg:text-[4.5rem] xl:text-[6rem] 2xl:text-[7rem] font-extrabold tracking-tight uppercase hover:text-[#037cf9] transition-colors inline-block w-fit origin-left">
           TODAY →
         </a>
       </div>

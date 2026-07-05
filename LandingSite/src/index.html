@@ -3,10 +3,202 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--
+      VIEWPORT NORMALIZATION:
+      Scale the page layout to appear consistent across all desktop resolutions.
+      Reference resolution: 1536px wide. At 1536px, zoom = 1 (100%).
+      At 1280px: zoom ≈ 0.833. At 1920px: zoom ≈ 1.25 (capped at 1.1 to avoid over-zooming).
+      Mobile (<768px) keeps zoom:1 for normal responsive behavior.
+    -->
+    <style>
+      @media (min-width: 768px) {
+        #root {
+          zoom: clamp(0.75, calc(100vw / 1536), 1.1);
+        }
+      }
+    </style>
+    <title>Akr Node Module & Skill Platform</title>
+    <meta name="description" content="Akr is a premium Node.js package management and AI scaffolding platform. Build high-performance applications with cinematic aesthetics." />
+    <meta name="last-modified" content="2026-07-05" />
+    <link rel="canonical" href="https://akr-node.com/" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Akr Node Module & Skill Platform" />
+    <meta property="og:description" content="Akr is a premium Node.js package management and AI scaffolding platform. Build high-performance applications with cinematic aesthetics." />
+    <meta property="og:image" content="https://akr-node.com/logo.png" />
+    <meta property="og:url" content="https://akr-node.com/" />
+    <meta property="og:type" content="website" />
+    
     <link rel="icon" type="image/png" href="../logo.png" />
-    <title>AKR-NodeModule&Skill </title>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    [{
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Akr Platform",
+      "description": "A premium developer platform for Node.js package discovery and scaffolding.",
+      "url": "https://akr-node.com/",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "dateModified": "2026-07-05"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Akr Ecosystem",
+      "url": "https://akr-node.com/",
+      "logo": "https://akr-node.com/logo.png",
+      "sameAs": ["https://github.com/ajaykumarreddy-k/Akr-Node"]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Akr Node Module & Skill Platform",
+      "url": "https://akr-node.com/",
+      "description": "Build high-performance applications with cinematic aesthetics."
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the Akr ecosystem and how does it work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Akr is a comprehensive ecosystem designed for modern Node.js developers. By combining my production-ready CLI templates with my advanced AI coding skill, I provide a unified workflow."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I deploy an Akr application?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Deploying an Akr application is straightforward and highly flexible. Because I generate standard, optimized build artifacts using industry best practices, you can host your site on any platform that supports static files or Node.js server environments."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Akr optimized for AI Search (AEO) and SEO?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, absolutely. In the modern web, being discoverable by both traditional search engines (like Google) and emerging AI systems (like ChatGPT and Claude) is critical for organic growth. That's why every Akr template includes built-in SEO and AEO metadata."
+          }
+        }
+      ]
+    }]
+    </script>
   </head>
   <body>
+    <!-- Static semantic content for AEO/SEO crawlers.
+         Visible to all crawlers before JS executes.
+         Visually hidden once React mounts via the noscript-safe CSS below. -->
+    <style>
+      #seo-content { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+    </style>
+
+    <div id="seo-content" aria-hidden="true">
+      <h1>Build Production-Ready React Websites in Minutes with Akr</h1>
+
+      <p>
+        Akr is a premium, open-source developer ecosystem designed specifically for modern Node.js and React developers
+        who want to ship high-quality, production-ready web applications without spending weeks on boilerplate
+        configuration. By combining a battle-tested CLI scaffolding tool with an advanced AI coding skill, Akr gives
+        developers a unified, opinionated workflow that prioritises speed, aesthetics, and long-term maintainability.
+      </p>
+
+      <p>
+        Whether you are an independent developer launching your first SaaS product or a team of engineers building a
+        complex multi-page marketing site, Akr removes the friction from project setup so you can focus entirely on
+        your product. Run a single command — <code>npm create akr</code> or <code>bun create akr</code> — and get a
+        fully configured project with <a href="https://react.dev/" rel="noopener noreferrer">React 19</a>,
+        <a href="https://vitejs.dev/" rel="noopener noreferrer">Vite</a>,
+        <a href="https://tailwindcss.com/" rel="noopener noreferrer">Tailwind CSS v4</a>,
+        TypeScript strict mode, Framer Motion, and GSAP all wired together and ready to go.
+      </p>
+
+      <h2>Two Ways to Use Akr</h2>
+
+      <p>
+        Akr is designed around two complementary workflows. The first is the <strong>npm/bun package</strong>: a
+        production-ready React starter template that sets up your entire project infrastructure in under thirty
+        seconds. The second is the <strong>Akr AI coding skill</strong>: a custom skill file you add to your AI
+        assistant (such as Claude or Cursor) that trains it to generate components, layouts, and animations that
+        follow the Akr design system precisely. Together, these two tools cover every phase of the development
+        lifecycle, from initial scaffolding to pixel-perfect UI refinement.
+      </p>
+
+      <p>
+        You can explore the full details of both approaches in our
+        <a href="/#two-ways">Two Ways to Use Akr section</a> on the homepage. For technical setup instructions
+        including advanced configuration options, visit our
+        <a href="/#docs">Documentation page</a>.
+      </p>
+
+      <h2>Core Technology Stack</h2>
+
+      <p>
+        Every project scaffolded by Akr ships with a carefully curated technology stack that represents current best
+        practices in frontend web development. The stack includes React 19 for component architecture, Vite for an
+        incredibly fast local development server and optimised production builds, Tailwind CSS v4 for utility-first
+        styling with a modern design token system, TypeScript in strict mode for type safety and self-documenting
+        code, Framer Motion for declarative, accessible animations, and GSAP with ScrollTrigger for advanced
+        scroll-linked interactions.
+      </p>
+
+      <p>
+        This combination is not arbitrary. Each library was chosen because it is either the industry standard in its
+        category or the most performant open-source solution available today. Akr regularly reviews the ecosystem and
+        updates the default stack to ensure you are always working with modern, well-supported dependencies. You can
+        see the full feature list in the <a href="/#features">Features section</a>.
+      </p>
+
+      <h2>Deployment and Performance</h2>
+
+      <p>
+        Deploying an Akr project is straightforward. Because the build output is a set of standard static assets
+        — HTML, CSS, and JavaScript — you can host your site on any platform that supports static file serving or
+        Node.js server environments. This includes edge platforms like
+        <a href="https://vercel.com/" rel="noopener noreferrer">Vercel</a>,
+        <a href="https://www.netlify.com/" rel="noopener noreferrer">Netlify</a>, and Cloudflare Pages, as well as
+        traditional VPS hosts and containerised environments with Docker. The build step automatically minifies
+        assets, splits code chunks intelligently, and optimises images for minimal load times.
+      </p>
+
+      <h2>Frequently Asked Questions</h2>
+
+      <h3>What is the Akr ecosystem and how does it work?</h3>
+      <p>
+        Akr is a comprehensive ecosystem designed for modern Node.js developers. By combining production-ready CLI
+        templates with an advanced AI coding skill, it provides a unified development workflow. You can bootstrap a
+        project instantly and then use the AI skill to generate components that follow the Akr design system
+        automatically, ensuring high performance and consistent cinematic aesthetics without thousands of lines of
+        boilerplate code. Learn more in the <a href="/#faq">FAQ section</a>.
+      </p>
+
+      <h3>Is Akr free and open source?</h3>
+      <p>
+        Yes. Akr is completely free and open source under the MIT licence. The source code for both the CLI
+        scaffolding tool and the AI skill are publicly available on
+        <a href="https://github.com/ajaykumarreddy-k/Akr-Node" rel="noopener noreferrer">GitHub</a>.
+        Premium bundles and enterprise support options are planned for a future release.
+      </p>
+
+      <h3>Is Akr optimized for AI Search and AEO?</h3>
+      <p>
+        Yes. Every Akr template includes built-in SEO and AEO (AI Engine Optimization) metadata, including
+        structured JSON-LD data, Open Graph tags, a sitemap, a robots.txt that allows all major AI crawlers, and
+        an llms.txt file that describes the site to AI systems directly.
+      </p>
+    </div>
+
     <div id="root"></div>
     <script type="module" src="./frontend.tsx"></script>
   </body>

@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 import plugin from "bun-plugin-tailwind";
 import { existsSync } from "fs";
-import { rm } from "fs/promises";
+import { rm, copyFile } from "fs/promises";
 import path from "path";
 
 if (process.argv.includes("--help") || process.argv.includes("-h")) {
@@ -153,6 +153,19 @@ const outputTable = result.outputs.map(output => ({
   Type: output.kind,
   Size: formatFileSize(output.size),
 }));
+
+// Copy static assets for AEO/SEO
+const staticAssets = ["robots.txt", "sitemap.xml", "llms.txt", "logo.png"];
+for (const asset of staticAssets) {
+  if (existsSync(path.join(process.cwd(), asset))) {
+    await copyFile(path.join(process.cwd(), asset), path.join(outdir, asset));
+    outputTable.push({
+      File: asset,
+      Type: "static",
+      Size: "copied",
+    });
+  }
+}
 
 console.table(outputTable);
 const buildTime = (end - start).toFixed(2);
