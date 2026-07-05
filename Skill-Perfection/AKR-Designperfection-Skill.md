@@ -1,6 +1,6 @@
 ---
 name: akr-inspo-design
-version: 2.1.0
+version: 2.4.0
 last_updated: 2026-07-05
 description: "Pulls UI reference components, animations, design-principle docs, and full-site designs from Ajay's personal repo (github.com/ajaykumarreddy-k/AKR-Inspo), layers in Leonxlnx/taste-skill's anti-slop design taste rules plus an AKR creative-direction layer (concept extraction, anti-SaaS detection, signature components), scaffolds new projects via `bun create akr` with a picked top-300 reference design + font pairing, implements chosen components directly in the user's project, and runs a full SEO/AEO/GEO discoverability audit+fix ONLY when explicitly asked. Before touching any code, requires a scoped project scan and, if requirements are unclear, asking for a PRD/requirements before implementing. Requires a concept/creative-direction pass before any layout or component is chosen — layout is never the starting point. After any implementation, writes/updates `akr-design.md` in the project root explaining exactly what changed and why. Trigger ONLY for: UI implementation requests, component generation, site/page redesign, animation requests, template scaffolding (`bun create akr`), or explicit SEO/AEO/GEO audit requests. Do NOT trigger for: general design discussion, feedback on existing UI, color-palette questions, or plain frontend debugging with no build/redesign ask."
 ---
@@ -10,6 +10,10 @@ description: "Pulls UI reference components, animations, design-principle docs, 
 **AKR Rule #0: Memorability is more important than beauty.** A beautiful generic design fails. A memorable design succeeds.
 
 **AKR Rule #1: Do not design websites. Design worlds.** Every project must establish a recognizable visual universe — product meaning, metaphor, and narrative — before any screen or layout gets built.
+
+**AKR Rule #2: Creativity must increase usefulness.** Every signature component, motion system, illustration, interaction, and storytelling mechanism must improve at least one of: understanding, discovery, navigation, trust, decision-making, or conversion. If it only looks cool, remove it.
+
+**AKR Rule #3: Every design decision must answer "why can this only exist in this product?"** If the answer could apply equally to a competitor, the idea isn't specific enough — go back to Step 2.5.
 
 Adapts proven UI patterns, design systems, and implementation references from AKR-Inspo (and React Bits for animated React components) into production-ready, distinctive components matched to the user's stack, brand, and requirements. Live preview: https://akr-inspo.vercel.app/
 
@@ -64,7 +68,7 @@ Output is a base template only — not a finished product. Keep it minimal:
 PRD → Audience → Brand Personality → Core Metaphor → Narrative →
 Visual Language → Signature Components → Layout → Implementation
 ```
-Layout is the *result* of this chain, never the starting point. If a design could be mistaken for a generic SaaS site after removing its logo, it has failed — see the Brand Recognition Test before Step 9.
+Layout is the *result* of this chain, never the starting point. If a design could be mistaken for a generic SaaS site after removing its logo, it has failed — see the AKR Quality Gate before Step 9.
 
 ## Step 2 — Fetch design taste rules (Leonxlnx/taste-skill) + AKR Identity Layer
 Layer these rules on top of anything pulled from AKR-Inspo or React Bits — they govern *how* components are adapted, not what's fetched:
@@ -184,6 +188,9 @@ On React projects, this step must draw on all three together — AKR-Inspo (layo
 6. Keep the original's visual polish (spacing, easing, color treatment) but reskin to the user's brand if one exists, applying Step 2's taste rules throughout.
 7. **Performance budget** — avoid stacking multiple animation libraries in one project, avoid Three.js/WebGL for purely decorative effects, avoid large video backgrounds, keep font payload under 100KB. Target Lighthouse 90+, CLS < 0.1, LCP < 2.5s. Don't let AKR-Inspo's flashier references (GSAP/Three.js/WebGL pieces) or React Bits animations turn an ordinary page into a GPU benchmark — use them only when the brief actually calls for that level of spectacle.
 8. **Signature design requirement** — a full project/redesign build (not a single scoped component edit) must land at least 3 signature components, 1 signature motion system, 1 signature illustration system, 1 signature interaction, and 1 signature storytelling mechanism, all derived from the Step 2.5 metaphor/narrative — not generic UI dressed up. Example (dev tool "NodeForge"): dependency galaxy, package DNA viewer, install-flow visualizer as components; storytelling mechanism = forge → molten package → dependency chain → built artifact, told through the page's scroll sequence, not just displayed as static content. Example (music product): soundwave navigation, dynamic playlist clusters, audio-reactive hero. Missing these on a full build is a fail — go back to Step 2.6.
+   **Signature component rule:** the homepage should be remembered *through* its signature components. Test each one — if removing it wouldn't noticeably weaken the experience, it was never a real signature component, just decoration wearing the label. Replace it with something that actually earns the name.
+9. **Signature object persistence** — the Step 2.5 signature object must appear throughout the experience (hero, nav, cards, interactions, transitions, footer), evolving in form but never disappearing. Example (NodeForge's "package ingot"): hero shows the ingot forming, trending section shows ingots, comparison view shows "refined ingots," dashboard shows "forged artifacts." A signature object used once in the hero and forgotten everywhere else doesn't count.
+10. **Visual consistency check** — every section must visibly belong to the same universe as the hero: same typography, shape language, motion language, component language, and storytelling language. If a section (the footer is the most common offender) reads like it was pulled from a different, generic website, redesign that section before moving on — don't let the hero carry all the identity alone.
 
 ## Step 8 — SEO / AEO / GEO Compliance (only when explicitly requested — never auto-triggers)
 Run this step ONLY if the user asks for one of: SEO, AEO, GEO, AI search optimization, LLM/ChatGPT/Claude/Perplexity optimization, discoverability, better indexing, search ranking, "make it findable." Asking for AEO does not imply GEO or SEO or vice versa — if the user's intent spans more than one, confirm which before doing extra work; don't assume one term auto-triggers the others. Never run as part of ordinary UI work. If domain/production URL is unknown, ask first.
@@ -238,26 +245,38 @@ Important URLs:
 ✓ meta description 50–160 chars, ≥100 words real content
 ```
 
-## Brand Recognition Test (before Step 9, full builds only)
-Ask: if the logo disappeared entirely, would the product still be recognizable from layout, motion, and signature components alone?
-- **Yes** → continue to Step 9.
-- **No** → the design leans on the logo instead of an identity. Return to Step 2.6 and pick a stronger direction before documenting anything.
-Skip this test for single scoped component edits — it applies to full projects/redesigns.
+## AKR Quality Gate (before Step 9, full builds only — skip for single scoped component edits)
+One consolidated gate, not a stack of separate audits. Run these checks in order, then score:
 
-## Creativity Audit (before Step 9, full builds only)
-Score out of 10 each: brand recognition without logo, originality, visual storytelling, signature components, memorability, motion quality, visual language consistency, worldbuilding ("could this product exist in its own visual universe?"). Average them.
-- **< 8.0** → fail, return to Step 2.6's creative exploration.
-- **8.0–8.9** → pass.
-- **9.0+** → AKR quality.
-State the average and a one-line reason if it's below 9.0. Skip for single scoped component edits.
+1. **Design Compression Test** — summarize the product's design identity in one sentence (e.g. Apple: "technology disappears"; Stripe: "financial infrastructure"; NodeForge: "software is forged"). If you can't, the identity is weak — back to Step 2.6. If you can, verify the built site actually reinforces that sentence.
+2. **Section Uniqueness Test** — for every section, ask: could this be copied into another SaaS site unmodified? Any "yes" is a fail on that section — redesign it.
+3. **Emotional Memory Test** — imagine the user 24 hours after leaving. If what they'd remember is hero text, a gradient, or a generic animation → fail. If it's the signature interaction, signature component, visual metaphor, or storytelling sequence → pass.
+4. **First Impression Test** — 3 seconds on the homepage: can they tell what this is, why it exists, and what makes it different? If not, the hero/narrative needs another pass.
+5. **Competitive Differentiation Test** — compare against the top 3 competitors in this category. Ask: what can users do here that they can't do there? (NodeForge vs npm/pnpm/yarn — if the design can't visually communicate the difference, it fails.) If the answer is unclear, the design is insufficiently differentiated — back to Step 2.6.
+6. **Interaction Ownership Test** — identify the single most memorable interaction. Ask: could another product in this space claim this same interaction? A generic hover card — yes, anyone could claim it, improve it. A dependency galaxy expanding into alternatives — no, that belongs to this product specifically, pass.
+7. **Brand recognition without logo** — if the logo disappeared, is the product still recognizable from layout, motion, and signature components alone?
 
-## First Impression Test (before Step 9, full builds only)
-Imagine a user seeing the homepage for 3 seconds. Can they identify: what this product is, why it exists, and what makes it different? If not, the hero and narrative need another pass before moving on — don't proceed to documentation with a first impression that fails this.
+**Final AKR Score** — score each /10, average:
+```
+Originality
+Usefulness (per Rule #2 — does the creativity actually help, or just look cool)
+Storytelling
+Worldbuilding (could this exist in its own visual universe?)
+Consistency (per the Step 7 visual consistency check)
+Memorability
+Recognition Without Logo
+Differentiation (per the Competitive Differentiation Test)
+```
+- **< 8.5** → fail, return to Step 2.6.
+- **8.5–8.9** → good.
+- **9.0–9.4** → AKR quality.
+- **9.5+** → AKR signature quality.
+State the average and, if below 9.0, the single biggest reason why.
 
 ## Step 9 — Write akr-design.md and confirm
 Before declaring done:
-1. Re-check output against Step 0's gathered requirements and, for full builds, the Creativity Audit score — not just "does it look cool."
-2. Create or update `akr-design.md` in the project's root (main tree). For every component pulled from an external source, record its **provenance**: source repo, source path, adaptation summary (what changed from the original), and dependencies added. Also document: the Step 2.5 concept summary, confidence level from Step 6, which taste-skill/AKR Visual DNA rules were applied, the Creativity Audit score if run, and — if Step 8 ran — the SEO validation results. This file exists so the user and any AI reading the project later can cross-verify what happened and why, without re-deriving it from git history.
+1. Re-check output against Step 0's gathered requirements and, for full builds, the AKR Quality Gate score — not just "does it look cool."
+2. Create or update `akr-design.md` in the project's root (main tree). For every component pulled from an external source, record its **provenance**: source repo, source path, adaptation summary (what changed from the original), and dependencies added. Also document: the Step 2.5 concept summary, confidence level from Step 6, which taste-skill/AKR Visual DNA rules were applied, the AKR Score if run, and — if Step 8 ran — the SEO validation results. This file exists so the user and any AI reading the project later can cross-verify what happened and why, without re-deriving it from git history.
 3. Report the same summary briefly in chat, pointing to `akr-design.md` for detail. Don't over-explain in chat — the file holds the detail.
 
 ## Notes
