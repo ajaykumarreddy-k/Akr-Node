@@ -1,714 +1,239 @@
-name: akr-inspo-design
-version: 3.3.0
-last_updated: 2026-07-05
-description: "Pulls UI reference components, animations, design-principle docs, and full-site designs from Ajay's personal repo, layers in taste-skill's anti-slop design rules plus an AKR creative-direction layer (concept extraction, world logic engine, typography intelligence, anti-SaaS detection, signature components), scaffolds new projects, implements components directly, and runs SEO audits when asked."
-
-AKR-Inspo Design Skill
-
-Trigger Rules
-
-Trigger ONLY for: UI implementation requests, component generation, site/page redesign, animation requests, template scaffolding (bun create akr), or explicit SEO/AEO/GEO audit requests.
-Do NOT trigger for: General design discussion, feedback on existing UI, color-palette questions, or plain frontend debugging with no build/redesign ask.
-
-AKR Core Philosophy
-
-Never start from layout. Always start from meaning.
-PRD → Audience → Brand Personality → Core Metaphor → Narrative → Visual Language → Signature Components → Layout → Implementation. Layout is the result of this chain, never the starting point.
-
-AKR Rule #0: Memorability is more important than beauty. A beautiful generic design fails. A memorable design succeeds.
-
-AKR Rule #1: Do not design websites. Design worlds. Every project must establish a recognizable visual universe — product meaning, metaphor, and narrative — before any screen or layout gets built.
-
-AKR Rule #2: Creativity must increase usefulness. Every signature component, motion system, illustration, interaction, and storytelling mechanism must improve at least one of: understanding, discovery, navigation, trust, decision-making, or conversion. If it only looks cool, remove it.
-
-AKR Rule #3: Every design decision must answer "why can this only exist in this product?" If the answer could apply equally to a competitor, the idea isn't specific enough.
-
-AKR Rule #4: Implementation Bias. When multiple valid solutions exist: prefer implementation. Do not continue generating new concepts once a valid concept has been selected. Move toward building to prevent analysis loops.
-
-AKR Rule #5: Complexity Budget. Every world has a complexity limit. If adding a new component, interaction, section, or system does not significantly improve understanding, discovery, navigation, trust, or conversion — remove it.
-
-Reference Priority (Highest Wins)
-
-Existing project codebase
-
-Existing brand/design system
-
-AKR-Inspo
-
-React Bits
-
-Design principles (Design md files/awesome-design-md/design-md, taste-skill rules)
-
-Original implementation (nothing fits — build fresh)
-
-Reference contamination guard: References inspire; they do not define. At least 60% of the final experience must originate from the Step 2.5 Concept Extraction output.
-
-Step 0 — Get Full Context First (MANDATORY)
-
-Never touch the repo, scaffold a project, or write SEO files before this.
-
-Scan the project structure safely (max depth 3). Read only core config files and the specific files tied to the requested route/component. Do not ingest the entire file tree.
-
-Check for a PRD/requirements doc. Read it fully if present.
-
-Answer this checklist explicitly, out loud, before writing code/fetching:
-
-Is there a PRD/requirements doc, OR did the user state what this is for, who it's for, and the exact component wanted? (yes/no)
-
-Is there an existing, inspectable brand/design system in the project? (yes/no)
-
-Is the request a single, narrowly-named component (not a redesign/new project)? (yes/no)
-
-Hard Gate: If all three are "no," or the ask is a new project/redesign with none of the above present: STOP HERE. Output only the clarifying questions below and end your turn:
-
-What is this project/page for, and who's the user?
-
-Any existing brand colors, fonts, or design language to match?
-
-Which exact component(s)/section(s) do you want?
-
-Any must-avoid patterns or must-keep elements?
-
-(If SEO/GEO mentioned) What's the production domain?
-
-Brand Extraction: Pull primary color, accent color, typography, category, audience, and existing design language. Existing brand always wins over imported references.
-
-Step 1 — New Project Bootstrap (bun create akr)
-
-Output is a base template only. Keep it minimal.
-
-Scaffold runnable base template with placeholder/test data in a default layout shell.
-
-Pick ONE reference design from assets/images (top-300-sites moodboard) matching Step 0 brief. State which one and why.
-
-Pick font pairing per the Typography Intelligence System.
-
-Apply design + font to the base layout only. Reuse existing design tokens/primitives before fetching from AKR-Inspo or React Bits.
-
-Step 2 — Design Taste Rules (Leonxlnx/taste-skill) + AKR Identity
 ---
 name: akr-inspo-design
-version: 3.0.0
+version: 5.0.0
 last_updated: 2026-07-05
-description: "Pulls UI reference components, animations, design-principle docs, and full-site designs from Ajay's personal repo (github.com/ajaykumarreddy-k/AKR-Inspo), layers in Leonxlnx/taste-skill's anti-slop design taste rules plus an AKR creative-direction layer (concept extraction, world logic/section/feature-translation engine, typography intelligence with Fontjoy, anti-SaaS detection, signature components), scaffolds new projects via `bun create akr` with a picked top-300 reference design + font pairing, implements chosen components directly in the user's project, and runs a full SEO/AEO/GEO discoverability audit+fix ONLY when explicitly asked. Before touching any code, requires a scoped project scan and, if requirements are unclear, asking for a PRD/requirements before implementing. Requires a concept/world/typography pass before any layout or component is chosen — layout is never the starting point. After any implementation, writes/updates `akr-design.md` in the project root explaining exactly what changed and why. Trigger ONLY for: UI implementation requests, component generation, site/page redesign, animation requests, template scaffolding (`bun create akr`), or explicit SEO/AEO/GEO audit requests. Do NOT trigger for: general design discussion, feedback on existing UI, color-palette questions, or plain frontend debugging with no build/redesign ask."
+description: "AKR-Inspo design skill: concept-first world-building UI generation with a closed verify/iterate loop. Pulls refs from AKR-Inspo repo + React Bits, applies taste-skill anti-slop rules, Color Hunt palettes, Fontjoy-assisted type pairing. Concept→World→Typography→Palette→Creative Exploration→Implement→Quality-Gate-Verify→Iterate→akr-design.md. Trigger: UI implementation, component gen, redesign, animation, scaffolding (bun create akr), explicit SEO/AEO/GEO. Do not trigger: design discussion, feedback-only, color-Q, plain debugging."
 ---
 
 # AKR-Inspo Design Skill
 
-**AKR Rule #0: Memorability is more important than beauty.** A beautiful generic design fails. A memorable design succeeds.
+## Uniqueness + Zero-Error Mandate (non-negotiable)
+- **Never reuse a metaphor, signature object, or Direction-C pick from a prior project.** Each Step 2.5 must be derived fresh from *this* brief — if it resembles an earlier build, go back and sharpen it.
+- **Ship only working code.** No missing imports, no broken links, no placeholder-in-final-output, no console errors. `dev` boots clean or it's not done.
+- **VERIFY score <8.5 = not done, no exceptions.** Loop until it passes or explicitly report why it can't reach 8.5.
 
-**AKR Rule #1: Do not design websites. Design worlds.** Every project must establish a recognizable visual universe — product meaning, metaphor, and narrative — before any screen or layout gets built.
-
-**AKR Rule #2: Creativity must increase usefulness.** Every signature component, motion system, illustration, interaction, and storytelling mechanism must improve at least one of: understanding, discovery, navigation, trust, decision-making, or conversion. If it only looks cool, remove it.
-
-**AKR Rule #3: Every design decision must answer "why can this only exist in this product?"** If the answer could apply equally to a competitor, the idea isn't specific enough — go back to Step 2.5.
-
-Adapts proven UI patterns, design systems, and implementation references from AKR-Inspo (and React Bits for animated React components) into production-ready, distinctive components matched to the user's stack, brand, and requirements. Live preview: https://akr-inspo.vercel.app/
-
-**Trigger when:** UI implementation, component generation, site/page redesign, animation requests, template scaffolding (`bun create akr`), or explicit SEO/AEO/GEO audit requests.
-**Do not trigger for:** general design discussion, feedback-only requests, color-palette questions, or plain frontend debugging with no build/redesign ask.
-
-**Reference priority** (when sources conflict, higher wins):
-1. Existing project codebase
-2. Existing brand/design system
-3. AKR-Inspo
-4. React Bits
-5. Design principles (`Design md files/awesome-design-md/design-md`, taste-skill rules)
-6. Original implementation (nothing fits — build fresh)
-
-**Reference contamination guard:** references may inspire, they may not define. Seeing AKR-Inspo, React Bits, and the top-300-sites moodboard side by side risks blending them into another generic modern SaaS look. At least 60% of the final experience must originate from the Step 2.5 Concept Extraction output (metaphor, narrative, signature object/interaction) — references fill in execution details around that concept, they don't replace it.
-
-## Step 0 — Get full context first (mandatory, do not skip)
-Never touch the repo, scaffold a project, or write SEO files before this.
-
-1. **Scan the project structure safely (max depth 3).** Read only core config files (`package.json`, `tailwind.config.ts`, `globals.css`, etc.) and the specific files tied to the requested route/component. Do not ingest the entire file tree — that causes context collapse and slows everything down for no benefit.
-2. **Check for a PRD/requirements doc** (`PRD.md`, `README.md`, `requirements.md`, `design.md`, `docs/`). Read it fully if present.
-3. **Answer this checklist explicitly, out loud, before writing any code or fetching anything:**
-   - Is there a PRD/requirements doc, OR did the user's own message already state: what this is for, who it's for, and which exact component/page is wanted? (yes/no)
-   - Is there an existing, inspectable brand/design system in the project (colors, fonts, tokens already defined)? (yes/no)
-   - Is the request a single, narrowly-named component (e.g. "add the pricing card from Components-maintiles"), not a redesign or new project? (yes/no)
-
-   **If all three are "no," or the ask is a new project/redesign/multi-component build with none of the above present: STOP HERE.** Do not scaffold, fetch, or write code in this turn. Output only the clarifying questions below and end your turn — wait for the user's reply before continuing:
-   - What is this project/page for, and who's the user?
-   - Any existing brand colors, fonts, or design language to match?
-   - Which exact component(s)/section(s) do you want?
-   - Any must-avoid patterns or must-keep existing elements?
-   - (If SEO/AEO/GEO was mentioned) What's the production domain?
-
-   **Proceed without asking only if at least one checklist item is a genuine "yes"** — and even then, state which one and state your assumptions for the rest inline before implementing.
-4. Only proceed to Step 1 once this gate is cleared.
-5. **Brand extraction** (alongside the scan, not separately): pull primary color, accent color, typography, product category, target audience, and existing design language if any exists. An existing brand always wins over an imported reference — use references to fill gaps, not override what's already there.
-
-Hard gate: no repo fetch, no scaffold, no SEO files while the checklist in point 3 above isn't cleared. This is a mechanical stop, not a suggestion — "the request seemed clear enough" is not a valid reason to skip it.
-
-## Step 1 — New project bootstrap (`bun create akr`)
-Output is a base template only — not a finished product. Keep it minimal:
-1. Scaffold a runnable base template with placeholder/test data and content (dummy copy, sample images/text) filled into a working default layout. No real content, no extra features beyond the layout shell.
-2. Pick ONE reference design from `assets/images` (top-300-sites moodboard) matching the project category and Step 0 brief. State which one and why, one line. (Only read image metadata/filenames for reference — do not download heavy image assets into the base template.)
-3. Pick font pairing per the Typography Intelligence System below (not a flat pick from `assets/Fonts` alone — that library is one candidate source among several).
-4. Apply design + font to the base layout only — this is a starting point for the user to build on, not the final implementation.
-
-**AKR package awareness:** when scaffolding, prefer components/tokens/primitives already present in the template over pulling new ones. Reuse existing design tokens, animation primitives, and layout primitives before fetching anything from AKR-Inspo or React Bits. Don't duplicate functionality the scaffold already provides.
-
-## AKR Core Philosophy (highest priority — governs every step below)
-**Never start from layout. Always start from meaning.**
+## Loop Architecture (governs the whole skill)
 ```
-PRD → Audience → Brand Personality → Core Metaphor → Narrative →
-Visual Language → Signature Components → Layout → Implementation
+DISCOVER (Step 0-2) → PLAN (2.5-2.6) → EXECUTE (3-7) → VERIFY (Quality Gate, independent pass) → ITERATE or DONE (9)
 ```
-Layout is the *result* of this chain, never the starting point. If a design could be mistaken for a generic SaaS site after removing its logo, it has failed — see the AKR Quality Gate before Step 9.
+**VERIFY must be an independent re-read of the built output** — not a continuation of the same reasoning that built it. Re-open the finished sections fresh, score against the Quality Gate below, without reusing earlier self-praise. Fail (<8.5) → back to 2.6c with a stated new direction, not the same direction restated. Never ship on a first pass without running VERIFY.
 
-## Step 2 — Fetch design taste rules (Leonxlnx/taste-skill) + AKR Identity Layer
-Layer these rules on top of anything pulled from AKR-Inspo or React Bits — they govern *how* components are adapted, not what's fetched:
-- Infer page kind + audience + vibe from the brief before writing any code; state it in one line ("Reading this as: <page kind> for <audience>, <vibe> language, leaning toward <aesthetic family>").
-- Dual-mode by default: open every page in light and dark, keep contrast/hierarchy parity between both.
-- No pure `#000000` / `#ffffff` — use off-black/off-white for depth.
-- No neon glows or generic AI-slop signatures unless explicitly requested.
-- WCAG AA minimum on body text.
+## Core Rules (always apply)
+- **R0** Memorability > beauty.
+- **R1** Design worlds, not websites — metaphor/narrative before any screen.
+- **R2** Creativity must increase usefulness (understanding/discovery/nav/trust/decision/conversion) or get cut.
+- **R3** "Why only this product?" — competitor-claimable = not specific enough.
+- **R4** Implementation bias — once valid, build; don't loop on ideation.
+- **R5** Complexity budget — anything not earning its keep gets removed.
 
-**AKR Identity Layer** — default aesthetic direction unless the brief or existing brand says otherwise:
-- Apple-level spacing discipline, Google-Labs-style experimentation in interaction, brutalist restraint in ornamentation.
-- Typography first, content before effects, motion only when it clarifies something (not decoration).
-- Dark mode first when no existing brand dictates otherwise.
+Chain: `PRD → Audience → Brand Personality → Metaphor → Narrative → Visual Language → Signature Components → Layout → Implementation`.
 
-**AKR Visual DNA** — default creative principles:
-- Controlled asymmetry, intentional imperfection, editorial typography, storytelling layouts, object-based interfaces, meaningful motion, layered depth, non-linear section transitions, illustration before decoration, function before effects.
-- Avoid: empty glassmorphism, random gradients, decorative motion with no purpose, AI-generated visual clutter.
+**Reference priority:** existing codebase > existing brand system > AKR-Inspo > React Bits > taste-skill/design-md rules > build fresh.
+**Contamination guard:** ≥60% of final experience must trace to Step 2.5's concept, not to references.
 
-**Don't over-design.** Do not introduce unnecessary motion, excessive gradients, complex 3D effects, glassmorphism, or bento-grid layouts unless the chosen reference or the user's request actually calls for them. Defaulting to these because they look impressive is the exact "AI portfolio syndrome" this skill exists to avoid.
+---
 
-**Anti-SaaS Detection** — after drafting a direction, check it against generic-SaaS fail conditions: a hero that's just headline+subtitle+CTA, a plain 3-card feature grid, a generic testimonial section, a standard SaaS footer, or visual similarity to Vercel/Stripe/Supabase/Clerk/Linear/Resend exceeding roughly 60%. If it trips these, stop and return to Step 2.6's creative exploration rather than shipping a lookalike — the failure mode is a design with no identity.
+## Step 0 — Gate (mandatory, first)
+Scan project (depth 3, core configs + requested route only). Read any PRD/README/design doc fully.
 
-If the user wants the full taste-skill rule set, tell them it's installable directly: `npx skills add https://github.com/Leonxlnx/taste-skill --skill "design-taste-frontend"`. Otherwise apply the summarized rules above inline — don't fetch the whole repo for a handful of rules already captured here.
+Answer yes/no aloud:
+1. PRD or user-stated (what/who/exact component)?
+2. Existing inspectable brand system?
+3. Single narrowly-named component (not redesign/new project)?
 
-## Step 2.5 — Concept Extraction Engine (mandatory)
-Before reading AKR-Inspo, React Bits, or any reference/component, extract and state explicitly:
+**All "no" → STOP**, ask only: project purpose+audience / existing brand colors+fonts / exact component(s) wanted / must-avoid+must-keep / (if SEO mentioned) domain.
+**≥1 "yes" → proceed**, state which + assumptions inline.
+Brand extraction: primary/accent color, type, category, audience — existing brand always wins.
+
+Skip Steps 2.5–2.6c and World Engine only for a genuine single-component edit — state existing concept briefly instead.
+
+---
+
+## Step 1 — `bun create akr` bootstrap
+Minimal runnable scaffold + placeholder content. Pick ONE moodboard ref (`assets/images`), state why (one line, filenames only). Font pairing per Typography Intelligence (2.6b). Reuse existing tokens/primitives before fetching anything external.
+
+---
+
+## Step 2 — Taste Rules + AKR Identity
+State: "Reading this as: `<page kind>` for `<audience>`, `<vibe>` language, `<aesthetic family>`."
+- Dual-mode (light+dark), parity kept. Dark mode first by default.
+- No pure `#000`/`#fff`. No neon/AI-slop unless asked. WCAG AA body text.
+- **Identity:** Apple-level spacing, Google-Labs experimentation, brutalist restraint. Type first, motion only if clarifying.
+- **Visual DNA:** controlled asymmetry, editorial type, storytelling layout, object-based UI, layered depth. Avoid empty glassmorphism, random gradients, decorative motion, bento-by-default.
+- **Anti-SaaS check:** hero=headline+sub+CTA only / plain 3-card grid / generic testimonials / standard footer / >~60% similarity to Vercel/Stripe/Supabase/Clerk/Linear/Resend → trips → back to 2.6c.
+- Full taste rule set: `github.com/Leonxlnx/taste-skill/tree/main/skills` — pull the `design-taste-frontend` skill folder when deeper rules are needed (spacing systems, color theory, layout grids); otherwise the summary above is enough. Treat it same as AKR-Inspo: browse via Contents API, don't clone.
+
+---
+
+## Step 2.5 — Concept Extraction (mandatory, must print before any code)
 ```
-Reading this project as:
 Product: <type>
 Audience: <audience>
 Brand Personality: <personality>
 Metaphor: <core metaphor>
-Narrative: <how the product's story plays out>
-Signature Object: <a recurring visual/interaction motif>
+Narrative: <how the story plays out>
+Signature Object: <recurring visual/interaction motif>
 Signature Interaction: <one interaction unique to this product>
-Visual Language: <typography/color/motion direction>
+Visual Language: <type/color/motion direction>
 ```
-Example — a package-manager dev tool ("NodeForge"): metaphor = digital forge; narrative = developers forge software from modules; signature object = package ingots; signature interaction = dependencies visually forging together.
-No implementation may begin before this is written out. Skip only when Step 0 already established a genuine single-component, brand-already-defined edit (per the Step 0 checklist) — in that case state the existing concept briefly instead of re-deriving it.
+No implementation before this exists (skip only per Step 0 single-edit exception).
 
-## AKR World Engine (mandatory for full builds — determines content/structure before typography or creative direction)
-Answers "what belongs in this world and what doesn't." Runs immediately after Concept Extraction, before Typography or Creative Exploration. Skip for single scoped component edits (per Step 0's checklist) — apply only to full projects/redesigns. This stage decides content and structure only — it adds no scoring, audits, or SEO of its own; those stay in the AKR Quality Gate and Step 8.
+---
 
-**Pipeline:** World Audit → World Logic Engine → Section Intelligence Engine → World Expansion → Feature Translation Engine → Missing Signature Opportunity Engine → Experience Expansion → World Density Test. Run in this order — don't jump to sections before the world's own logic is defined, or sections will drift from the metaphor.
+## Step 2.6a — World Engine (mandatory, full builds; print each numbered result)
+1. **World Audit** — concept concrete enough? If not, back to 2.5.
+2. **World Logic** — World Rules / Vocabulary / Objects / Systems / Relationships. Later additions breaking these get rejected.
+3. **World Ownership Test** — strip logo/name; could another product own this world? Yes → refine metaphor. No → pass.
+4. **Narrative Arc** — map every section to: Introduction → Understanding → Exploration → Evaluation → Decision → Commitment. Merge/remove stage duplicates.
+5. **Section Intelligence** — score Trust/Conversion/Narrative/Community/Education/Complexity. **First run the Full Section Inventory Check** — explicitly evaluate every standard section against this world before excluding any: Nav/Header, Hero, Features, Comparison, Pricing, Testimonials, FAQ, CTA, Footer (plus product-specific ones: dashboard/gallery/docs/etc). Each gets a Required/Optional/Forbidden verdict + reason — "forbidden" is a real decision stated out loud, not a silent omission. A full build missing Nav, Header, or Footer without a stated reason is a fail. Output the three lists.
+6. **Section Ownership Test** — could a required section appear unchanged in a competitor? Yes → redesign into world terms.
+7. **Component Intelligence** — per section: info density + intent + exploration/trust/conversion need → generate accordingly (high exploration→explorers/graphs; high trust→evidence/case studies; high conversion→comparison/decision panels). Never default to card grid / feature grid / testimonial carousel / plain table.
+8. **Component Ownership Test** — same yes/no logic, per component.
+9. **Pattern Translation** — never ship generic Testimonials/Pricing/FAQ/Features/**Comparison**/Dashboard/Footer as-is; translate into world vocabulary first (e.g. Forge-world testimonials → Architect Field Reports; a Comparison table → a world-native analysis tool, never a bare `<table>`).
+10. **Feature Translation** — every generic feature → world term (Search→Scanner, Dashboard→Control Center). None ships generic.
+11. **Signature Interaction Engine** — one interaction only this product could own; prioritize understanding/exploration/discovery over decoration.
+12. **Signature Component Expansion Test** — each signature component must teach, navigate, clarify, or aid decisions. An icon+text feature card is decoration, not signature — reject and rebuild as a functional component (comparator, visualizer, evidence piece).
+13. **World Completion Test** — what's missing (objects/places/tools/archives/systems)? Fold best 1–3 into the build (Experience Expansion).
+14. **World Density Test** — world must appear in hero, nav, cards, sections, interactions, **loading/empty/error states**, footer, microcopy. Hero+cards-only → FAIL, add touchpoints until it isn't.
+15. **Signature Object Evolution** — object evolves (raw material→blueprint→assembly→artifact); track explicitly hero→nav→sections→interactions→footer; absent >2 consecutive sections → FAIL, add it back.
+16. **Empty/Error State Intelligence** — loading/empty/error copy must be world-voiced (e.g. "No artifacts detected in the forge," never "No results found").
+17. **Footer Consistency** — footer must continue the narrative; generic link-list footer is an automatic fail, redesign it.
 
-1. **World Audit** — check the Step 2.5 concept is concrete enough to build from: clear metaphor, a narrative arc, at least one signature object. If any is missing or vague, go back and sharpen Concept Extraction first.
-2. **World Logic Engine** — define the world's internal rules before inventing content: World Rules (what is/isn't possible in this metaphor), World Vocabulary (words this world uses instead of generic UI/business terms), World Objects (recurring nouns, e.g. NodeForge: raw material, blueprint, forge, artifact), World Systems (how objects transform/interact), World Relationships (how objects/systems relate to the user). Anything added later that breaks these rules — a page, component, section — gets redesigned or rejected. A "Corporate Team Section" breaks NodeForge's forge metaphor even though "most sites have one" — it doesn't belong.
-3. **Section Intelligence Engine** — never default to a fixed site structure (hero/features/testimonials/pricing/FAQ/footer just because it's typical). Determine sections from product type, audience, trust requirements, conversion requirements, the world's narrative, and industry expectations. Output three lists with reasons: **Required** (why each is required for this specific product/audience), **Optional** (worth considering, tradeoff stated), **Unnecessary** (explicitly excluded, why). For every section ask "why does this exist?" — if the honest answer is "most websites have it," delete it.
-4. **World Expansion** — extend the World Logic Engine's vocabulary/objects/systems to cover every required section, so each is expressible in world terms before feature translation.
-5. **Feature Translation Engine** — every generic feature must be translated into the world's vocabulary before it's built: Search → Scanner, Dashboard → Control Center, Comparison → Analysis Bench, Notifications → Signal Alerts, Collections → Archives (illustrative — translate per this world's own vocabulary). A feature left in generic terms hasn't been integrated into the world yet — translate it or reconsider whether it belongs.
-6. **Missing Signature Opportunity Engine** — originality comes from what the world implies but doesn't yet have, not from the requested feature list. Ask: what unique experiences are implied by this world's metaphor/vocabulary but don't exist yet? Generate candidate missing components, interactions, systems, experiences; prioritize originality. Example — a "Cosmos Lab" world with Planet Explorer and Mission Control implies but is missing: an Observatory, a Research Archive, Deep Space Missions, Discovery Logs.
-7. **Experience Expansion** — fold the best 1-3 highest-originality missing opportunities into the actual build plan, don't just list and move on. This is what makes the world feel larger than its current implementation.
-8. **World Density Test** — does the world feel thin (metaphor applied only to the hero) or dense (shows up in navigation, empty states, error messages, micro-copy, loading states)? Thin is a fail — pick 2-3 more touchpoints from Experience Expansion and apply the world there.
+Hand the finalized, fully-translated section list to Typography + Palette + 2.6c next.
 
-**World-engine hard rules:**
-- Every page must contribute to the world; a page that doesn't reinforce the metaphor/narrative doesn't belong.
-- Every feature must have a world equivalent (per Feature Translation) — none ships in generic terms.
-- A user should be able to describe the world after using the product, not just list its features.
-- The world should feel larger than the current implementation (per Experience Expansion).
-- The best ideas are often implied rather than requested — the Missing Signature Opportunity Engine exists to find them, not just fulfill the literal brief.
+---
 
-Hand the finalized section list (world-translated features + expanded signature opportunities) to Typography Intelligence and Step 2.6 next.
+## Step 2.6b — Typography Intelligence
+1. **Strategy** — derive Display/Body/Data/Utility role needs from the concept.
+2. **Candidates** — 2–3 pairings from: existing brand fonts (priority) > `assets/Fonts` > Fontjoy-assisted (`github.com/Jack000/fontjoy`) > custom. Never accept a Fontjoy pairing unvalidated against brand/narrative/accessibility.
+3. **Score & pick** — Brand fit 40 / Readability 25 / Originality 15 / A11y 10 / Tech 10. **Must print:** pick + runner-up + numeric scores.
+4. **Ownership test** — strip logo/color/motion; still distinctive? No → back to #2.
+5. **Hierarchy audit** — Display/Heading/Subheading/Body/Caption/Data/Code/Nav/Buttons each justified.
+6. **Consistency** — one type system across all sections.
+7. Prefer variable fonts unless static weights are genuinely required.
 
-## Typography Intelligence System (after Concept Extraction and World Engine, before Creative Exploration)
-Font selection is not "pick a nice pairing" — it runs through the same rigor as everything else:
+## Step 2.6b.2 — Palette Intelligence
+1. **Candidates** — 2–3 palettes from: existing brand colors (priority) > Color Hunt (`colorhunt.co`, browse/search by mood — e.g. "dark," "pastel," "retro" — matching the Step 2.5 personality) > custom-derived from the metaphor.
+2. **Score & pick** — Brand/metaphor fit 40 / Contrast+A11y (WCAG AA) 25 / Dual-mode viability (works light+dark) 20 / Originality 15. **Must print:** pick + runner-up + scores.
+3. **Ownership test** — does the palette read as generic SaaS blue/purple gradient? If yes, back to #1.
+4. Pair the winning palette with the winning type system — check they don't fight (e.g. a loud experimental palette needs a quieter type system, and vice versa).
 
-1. **Strategy** — from the Step 2.5 concept, extract brand personality, emotional tone, product category, trust level, energy level, audience expectations. Decide the roles needed: Display, Body, Data (numbers/tables), Utility (nav/buttons/labels) — and why each role exists for this product.
-2. **Pairing candidates** — generate 2-3 candidates from: existing brand fonts (if any, highest priority), the internal `assets/Fonts` library, Fontjoy (jackyeah's github.com/Jack000/fontjoy, or its live pairing tool) as a pairing assistant, or a custom pairing. Never blindly accept a Fontjoy-generated pairing — mathematical compatibility isn't the same as a strong pairing; validate every candidate against brand personality, narrative, visual language, audience, and accessibility before accepting it.
-3. **Score candidates** — Brand fit 40%, Readability 25%, Originality 15%, Accessibility 10%, Technical compatibility 10%. Select the highest score, state the pick and runner-up.
-4. **Typography ownership test** — mentally strip logo, colors, imagery, and motion. Does the product still feel distinctive from typography alone? If not, the pairing is too generic — go back to step 2 (candidates).
-5. **Hierarchy audit** — verify each level has a clear, distinct purpose: Display, Heading, Subheading, Body, Caption, Data, Code, Navigation, Buttons. Avoid unnecessary extra weights/sizes that don't serve a role.
-6. **Consistency + memorability** — every section must use the same type system (a section that looks like a different product's typography gets redesigned); and after 24 hours, would a user remember a distinctive typographic treatment, or only colors/graphics? Type should pull its own weight in the identity, not ride along.
-7. **Prefer variable fonts** when available — smaller payload, better performance, flexible hierarchy, more responsive. Only ship multiple static font files when the project genuinely needs weights/styles a variable font can't cover.
+Record both as **Typography System** + **Palette System** blocks in `akr-design.md`.
 
-Record the result in `akr-design.md` (Step 9) as a **Typography System** block: Display / Heading / Body / Code / Fallback fonts, pairing rationale, and the score from step 3 above.
+---
 
-## Step 2.6 — Creative Exploration Engine
-Before selecting any reference, generate three directions and evaluate each on originality, UX, memorability, brand alignment, and technical feasibility:
-- **Direction A — Safe:** closest to conventional patterns for this category.
-- **Direction B — Creative:** distinct visual language, still low-risk to implement.
-- **Direction C — Experimental:** the boldest interpretation of the Step 2.5 concept.
-Select the winner — do not default to Direction A. Prioritize memorability and brand recognition over safety, unless Step 0's brief explicitly calls for conventional/safe (e.g. enterprise B2B constraints).
+## Step 2.6c — Creative Exploration
+Generate three directions (score originality/UX/memorability/brand fit/feasibility):
+- **A Safe** — conventional for category.
+- **B Creative** — distinct, low technical risk.
+- **C Experimental** — boldest reading of the concept.
 
-## Design Director Review (before implementation)
-Attack the chosen direction once before building anything:
-- What feels generic?
-- What feels expected?
-- What would a top creative agency improve?
-- What would make this memorable after 6 months, not just on first look?
-Refine the direction once based on this — don't ship the first draft unchallenged. Skip for single scoped component edits.
+Pick winner (don't default to A unless brief explicitly wants conventional/enterprise-safe). **Design Director Review**: what's generic? what's expected? what would a top agency change? what's memorable at 6 months? Refine once.
 
-## Step 3 — Browse AKR-Inspo, don't clone it
-Never `git clone` the whole repo (`dist/`, gradients, fonts, full site copies make it heavy). Browse only the needed subtree via the GitHub Contents API — this is the fast path, keep it that way.
+---
 
-Use your native HTTP tool or `curl` to fetch:
-```
-https://api.github.com/repos/ajaykumarreddy-k/AKR-Inspo/contents/Components-maintiles/Hero-Sections
-```
-**Crucial:** if `$GITHUB_TOKEN` is available in your environment, pass it in the request headers (`Authorization: Bearer $GITHUB_TOKEN`) to bypass the 60 req/hr unauthenticated limit.
+## Step 3 — Browse AKR-Inspo (never clone)
+GitHub Contents API on subtrees only: `https://api.github.com/repos/ajaykumarreddy-k/AKR-Inspo/contents/<path>`. Pass `$GITHUB_TOKEN` if available. Never list recursively, never re-list a folder this session, skim filenames before fetching.
 
-Returns `name`, `type` (`file`/`dir`), `download_url`. Drill into `dir` entries by re-calling with the subpath. Fetch matched files directly from their `download_url`.
+**Unavailable** → local cache → ask user for path/code → build from Step 2 + design-md rules. Don't stall.
 
-Speed rules: never list the whole tree recursively, never re-list a folder already listed this session, fetch only files you're actually going to use (skim filenames first, don't download-then-decide). Stay well under rate limits by being targeted.
+**React Bits** (`DavidHDev/react-bits`, React only) — combine with AKR-Inspo (AKR-Inspo=layout/structure, React Bits=text/scroll/hover micro-anim). Match variant (JS-CSS/JS-TW/TS-CSS/TS-TW) to project setup.
 
-**If GitHub API access is unavailable** (no internet, blocked network, rate-limited out):
-1. Check for a local AKR-Inspo copy already on disk (previously cloned/cached) and use that.
-2. If none, ask the user for the specific component path or to paste the code directly.
-3. If neither is possible, fall back to building from the design-taste rules in Step 2 and the design-md principles in Step 4 alone — don't stall the task waiting on network access.
+---
 
-**Secondary source — React Bits (React projects only, actively used, not just fallback):** for animated text/background/UI components in a React stack, `reactbits.dev` (repo: `DavidHDev/react-bits`) is a well-maintained fit. On any React implementation task, pick a few relevant React Bits components alongside AKR-Inspo ones (e.g. AKR-Inspo for layout/hero/section structure, React Bits for text/scroll/hover micro-animations) rather than treating it as only a fallback when AKR-Inspo has nothing — the two are meant to be combined. It ships 4 variants (JS-CSS, JS-TW, TS-CSS, TS-TW) — pick the variant matching the project's actual JS/TS + styling setup rather than converting after the fact. Browse the same way: Contents API on the repo, drill into `src/content` (JS-CSS), `src/tailwind` (JS-TW), `src/ts-default` (TS-CSS), or `src/ts-tailwind` (TS-TW) depending on variant needed. Do not use this for non-React projects.
-
-## Step 4 — Map request → folder
-| User wants | Folder |
+## Step 4 — Request → folder map
+| Want | Folder |
 |---|---|
-| Buttons, cards, pricing, testimonials, nav, footer, CTA | `Components-maintiles/<Category>` |
-| Framer-motion/GSAP micro-interactions | `Frammer&21st dev Components/<Effect Name>` |
-| Full landing page / site template | `Entire site/<Site Name>` |
-| Scroll-triggered animation | `Scroll animations/src` |
-| 3D text / WebGL text effect | `3d text animations/good ones` |
-| GSAP components (pick a few that fit, don't dump the folder) | `opencode GSAP/` and its subfolders |
-| Design principle references (spacing, color theory, layout systems, etc.) | `Design md files/awesome-design-md/design-md` — read only the specific `.md` matching the current problem (e.g. `spacing.md` when spacing is the issue), not the whole set |
-| Top-300-sites design reference | `assets/images` |
-| Fonts | `assets/Fonts` |
+| Buttons/cards/pricing/testimonials/nav/footer/CTA | `Components-maintiles/<Category>` |
+| Framer/GSAP micro-interactions | `Frammer&21st dev Components/<Effect>` |
+| Full landing page/site | `Entire site/<Site Name>` |
+| Scroll animation | `Scroll animations/src` |
+| 3D text/WebGL | `3d text animations/good ones` |
+| GSAP (pick a few) | `opencode GSAP/` |
+| Design principles | `Design md files/awesome-design-md/design-md` (matching `.md` only) |
+| Taste rules (deep dive) | `github.com/Leonxlnx/taste-skill/tree/main/skills` |
+| Top-300 site refs | `assets/images` |
+| Fonts | `assets/Fonts` (secondary to Fontjoy-validated pick) |
+| Palettes | Color Hunt `colorhunt.co` (secondary to existing brand) |
 | Gradients | `Resource-Boy-Retro-Photoshop-Gradients/` |
-| React-specific animation/micro-interaction (text, hover, scroll, background) | `DavidHDev/react-bits` (see Step 3 secondary source) — combine with AKR-Inspo on React projects, not fallback-only |
+| React micro-interactions | `DavidHDev/react-bits` |
 
-Unsure which folder fits → `ls` the closest 2-3 candidates, skim filenames, pick.
+Unsure → `ls` top 2–3, skim, pick. **Multiple fits →** score Originality 30 / Visual fit 25 / Brand fit 20 / Tech fit 15 / A11y 10; state pick + runner-up.
 
-**When multiple candidates fit** (more than one component/design/font could work), score them instead of picking by gut:
-- Originality (does it avoid the Anti-SaaS fail conditions and serve the Step 2.5 concept) — 30%
-- Visual fit to the brief/reference — 25%
-- Brand fit (matches extracted brand from Step 0) — 20%
-- Technical fit to the project's stack — 15%
-- Accessibility fit (contrast, semantic structure) — 10%
-Pick the highest score; state the pick and runner-up in one line so the choice is auditable, not silent. Originality is weighted highest deliberately — it's what stops the skill from converging on the same safe pick every time.
+---
 
 ## Step 5 — Read before applying
-`view`/`cat` the matched component fully (code + any co-located `.md`) before touching the user's project. Note dependencies (framer-motion/gsap/three.js), tailwind classes, referenced assets.
+View matched component fully (code + co-located `.md`) before touching the project. Note deps, classes, assets.
 
-## Step 6 — State implementation confidence
-Before writing any code, state confidence level and act accordingly:
-- **High** — matching component found, stack supported, brand clear → proceed directly.
-- **Medium** — only a similar (not exact) component found, or minor adaptation required → proceed, but flag the adaptation being made in one line.
-- **Low** — no matching reference, a major redesign is implied, or requirements are still missing → stop and ask before writing code, don't guess your way through a low-confidence build.
+## Step 6 — State confidence (mandatory, must print before coding)
+- **High** — exact match, stack supported, brand clear → proceed.
+- **Medium** — similar-not-exact → proceed, flag the adaptation in one line.
+- **Low** — no match / major redesign implied / requirements unclear → stop, ask.
 
-## Step 7 — Implement directly in the user's project
-On React projects, this step must draw on all three together — AKR-Inspo (layout/structure/full-section references), React Bits (a few picked micro-animation/text/hover components), and the Step 2 taste rules (governing how everything is styled/toned) — not any one in isolation.
-1. Detect actual stack from `package.json`/existing components — framework, styling system, JS/TS.
-2. Rewrite fetched code (from AKR-Inspo and/or React Bits) to match that stack's conventions.
-3. Install missing deps via the project's package manager — but apply dependency guardrails first: never add a new dependency if a native browser API already solves it, an existing project dependency already covers it, or the needed utility is under ~50 lines of code to write directly. Prefer fewer dependencies over convenience installs.
-4. Copy needed assets into the project's own asset folder (don't reference the repo path).
-5. Wire into the actual page/route being worked on.
-6. Keep the original's visual polish (spacing, easing, color treatment) but reskin to the user's brand if one exists, applying Step 2's taste rules throughout.
-7. **Performance budget** — avoid stacking multiple animation libraries in one project, avoid Three.js/WebGL for purely decorative effects, avoid large video backgrounds, keep font payload under 100KB. Target Lighthouse 90+, CLS < 0.1, LCP < 2.5s. Don't let AKR-Inspo's flashier references (GSAP/Three.js/WebGL pieces) or React Bits animations turn an ordinary page into a GPU benchmark — use them only when the brief actually calls for that level of spectacle.
-8. **Signature design requirement** — a full project/redesign build (not a single scoped component edit) must land at least 3 signature components, 1 signature motion system, 1 signature illustration system, 1 signature interaction, and 1 signature storytelling mechanism, all derived from the Step 2.5 metaphor/narrative — not generic UI dressed up. Example (dev tool "NodeForge"): dependency galaxy, package DNA viewer, install-flow visualizer as components; storytelling mechanism = forge → molten package → dependency chain → built artifact, told through the page's scroll sequence, not just displayed as static content. Example (music product): soundwave navigation, dynamic playlist clusters, audio-reactive hero. Missing these on a full build is a fail — go back to Step 2.6.
-   **Signature component rule:** the homepage should be remembered *through* its signature components. Test each one — if removing it wouldn't noticeably weaken the experience, it was never a real signature component, just decoration wearing the label. Replace it with something that actually earns the name.
-9. **Signature object persistence** — the Step 2.5 signature object must appear throughout the experience (hero, nav, cards, interactions, transitions, footer), evolving in form but never disappearing. Example (NodeForge's "package ingot"): hero shows the ingot forming, trending section shows ingots, comparison view shows "refined ingots," dashboard shows "forged artifacts." A signature object used once in the hero and forgotten everywhere else doesn't count.
-10. **Visual consistency check** — every section must visibly belong to the same universe as the hero: same typography, shape language, motion language, component language, and storytelling language. If a section (the footer is the most common offender) reads like it was pulled from a different, generic website, redesign that section before moving on — don't let the hero carry all the identity alone.
+---
 
-## Step 8 — SEO / AEO / GEO Compliance (only when explicitly requested — never auto-triggers)
-Run this step ONLY if the user asks for one of: SEO, AEO, GEO, AI search optimization, LLM/ChatGPT/Claude/Perplexity optimization, discoverability, better indexing, search ranking, "make it findable." Asking for AEO does not imply GEO or SEO or vice versa — if the user's intent spans more than one, confirm which before doing extra work; don't assume one term auto-triggers the others. Never run as part of ordinary UI work. If domain/production URL is unknown, ask first.
+## Step 7 — Implement (EXECUTE stage of the loop)
+1. Detect stack from `package.json`/existing code.
+2. Rewrite fetched code to stack conventions.
+3. New deps only if native API / existing dep / <~50-line utility can't cover it.
+4. Copy assets into project's own folder.
+5. Wire into the actual route.
+6. Reskin to the winning palette+type system, apply Step 2 taste rules.
+7. **Perf budget** — no stacked animation libs, no Three.js/WebGL for pure decoration, no large video bg, font payload <100KB. Target Lighthouse 90+, CLS<0.1, LCP<2.5s.
+8. **Signature requirement (full builds)** — ≥3 signature components (each passing the 2.6a #12 teach/navigate/decide test), 1 signature motion system, 1 signature illustration system, 1 signature interaction, 1 signature storytelling mechanism — all from the Step 2.5 concept. Every page needs ≥1 signature component.
+9. **Signature object persistence** — object appears hero→nav→cards→interactions→footer, evolving, never absent >2 sections running (per 2.6a #15).
+10. **Visual consistency check** — every section (footer especially) visibly belongs to the hero's universe; redesign any that doesn't.
+11. **Full-site coverage check** — confirm Nav/Header, Hero, Pricing, Comparison, Testimonials, and Footer are all present (per Step 2.6a #5's inventory) or explicitly marked Forbidden with a stated reason — no silent gaps. Comparison/Testimonials/Footer are historically the most-skipped translations: confirm they're world-voiced, not generic — re-run Pattern Translation (2.6a #9) on any that slipped through.
 
-Adapt to whatever framework Step 0 detected: Next.js, React/Vite, Astro, Nuxt, Vue, SvelteKit, Go templates, static HTML. If a requirement can't be implemented due to framework limits, say why and hand over the raw file/code instead of skipping silently.
+---
 
-**Findable** — confirm HTTPS; generate/update `/robots.txt` allowing GPTBot, ClaudeBot, PerplexityBot, Google-Extended plus `*`:
-```
-User-agent: GPTBot
-Allow: /
-User-agent: ClaudeBot
-Allow: /
-User-agent: PerplexityBot
-Allow: /
-User-agent: Google-Extended
-Allow: /
-User-agent: *
-Allow: /
-Sitemap: https://<domain>/sitemap.xml
-```
-Generate/update `/sitemap.xml` from real routes only (don't invent pages). Add canonical `<link>` to every page head.
+## Step 8 — SEO/AEO/GEO (only if explicitly requested)
+Confirm which of SEO/AEO/GEO is wanted; don't assume one implies the others. Ask for domain if unknown.
+- **Findable:** HTTPS; `/robots.txt` (allow GPTBot, ClaudeBot, PerplexityBot, Google-Extended, `*`); `/sitemap.xml` from real routes; canonical `<link>`.
+- **Quotable:** meta description 50–160 chars/page; ≥100 words real body text; freshness signals; `FAQPage` schema only where real Q&A exists.
+- **Understandable:** one `<h1>`/page; clean hierarchy; OG tags; JSON-LD as applicable; alt text ≥50% of images.
+- **Trustworthy:** ≥3 contextual internal links (nav/footer excluded); ≥2 outbound citation links; generate `/llms.txt`.
+- Report a plain ✓/✗ checklist — don't rubber-stamp.
 
-**Quotable** — meta description per page (50–160 chars, from real content); ≥100 words real body text per page (flag thin pages, don't pad with fluff); freshness signals (JSON-LD dates, meta tags, sitemap `lastmod`); FAQ sections + `FAQPage` schema only where content genuinely has Q&A shape.
+---
 
-**Understandable** — one descriptive `<h1>` per page, clean heading hierarchy; OG tags (`og:title/description/image/url`); JSON-LD (`Organization`, `WebSite`, `WebPage`, `FAQPage`, `Article`, `BreadcrumbList` — whichever apply); alt text on ≥50% of images, written descriptively.
+## VERIFY — AKR Quality Gate (mandatory before Step 9, full builds; independent pass, must print scores)
+Re-read the built output fresh — don't reuse the reasoning that built it.
+1. Design Compression — one-sentence identity; can't state it → back to 2.6c.
+2. Section Uniqueness — any section copy-pasteable into another SaaS unmodified? → redesign it.
+3. Emotional Memory — what's remembered at 24h? Generic → fail.
+4. First Impression — 3-second what/why/different test.
+5. Competitive Differentiation — vs top 3 competitors, what's only possible here?
+6. Interaction Ownership — could a competitor claim the core interaction?
+7. Brand Recognition Without Logo.
 
-**Trustworthy** — ≥3 contextual internal body links (nav/footer don't count); ≥2 outbound citation links where relevant; generate `/llms.txt`:
-```
-# Site Information
-Name: <Site Name>
-Description: <Site Description>
-Primary Topics:
-- Topic 1
-- Topic 2
-Important URLs:
-- /
-- /about
-- /contact
-```
+**Score /10 each, average:** Originality, Usefulness, Storytelling, Worldbuilding, Consistency, Memorability, Logo-less Recognition, Differentiation.
+- <8.5 → **ITERATE**: return to 2.6c with a genuinely new direction (not the same one restated), re-run EXECUTE, re-run VERIFY.
+- 8.5–8.9 good · 9.0–9.4 AKR quality · 9.5+ AKR signature.
+Print the average; if <9.0, print the single biggest reason why.
 
-**Validation** — report plainly, don't rubber-stamp:
-```
-✓ robots.txt exists, AI crawlers allowed
-✓ sitemap.xml matches real routes
-✓ llms.txt exists
-✓ canonical URLs on every page
-✓ JSON-LD valid
-✓ Open Graph tags present
-✓ heading hierarchy valid
-✓ alt text coverage ≥ 50%
-✓ ≥3 internal + ≥2 external links per page
-✓ meta description 50–160 chars, ≥100 words real content
-```
+---
 
-## AKR Quality Gate (before Step 9, full builds only — skip for single scoped component edits)
-One consolidated gate, not a stack of separate audits. Run these checks in order, then score:
+## Step 9 — `akr-design.md` (mandatory, any full build/redesign) → DONE
+Write/update at project root:
+- Provenance per fetched component: source repo/path, adaptation summary, deps added.
+- Step 2.5 concept summary.
+- World Engine section list (required/optional/excluded + reasons) + feature/pattern translations.
+- Typography System block (fonts/roles/rationale/scores) + Palette System block (colors/source/scores).
+- Step 6 confidence level.
+- Taste/Visual-DNA rules applied.
+- AKR Quality Gate score + iteration count (how many VERIFY loops ran).
+- SEO validation results (if Step 8 ran).
 
-1. **Design Compression Test** — summarize the product's design identity in one sentence (e.g. Apple: "technology disappears"; Stripe: "financial infrastructure"; NodeForge: "software is forged"). If you can't, the identity is weak — back to Step 2.6. If you can, verify the built site actually reinforces that sentence.
-2. **Section Uniqueness Test** — for every section, ask: could this be copied into another SaaS site unmodified? Any "yes" is a fail on that section — redesign it.
-3. **Emotional Memory Test** — imagine the user 24 hours after leaving. If what they'd remember is hero text, a gradient, or a generic animation → fail. If it's the signature interaction, signature component, visual metaphor, or storytelling sequence → pass.
-4. **First Impression Test** — 3 seconds on the homepage: can they tell what this is, why it exists, and what makes it different? If not, the hero/narrative needs another pass.
-5. **Competitive Differentiation Test** — compare against the top 3 competitors in this category. Ask: what can users do here that they can't do there? (NodeForge vs npm/pnpm/yarn — if the design can't visually communicate the difference, it fails.) If the answer is unclear, the design is insufficiently differentiated — back to Step 2.6.
-6. **Interaction Ownership Test** — identify the single most memorable interaction. Ask: could another product in this space claim this same interaction? A generic hover card — yes, anyone could claim it, improve it. A dependency galaxy expanding into alternatives — no, that belongs to this product specifically, pass.
-7. **Brand recognition without logo** — if the logo disappeared, is the product still recognizable from layout, motion, and signature components alone?
+Report briefly in chat, point to the file for detail.
 
-**Final AKR Score** — score each /10, average:
-```
-Originality
-Usefulness (per Rule #2 — does the creativity actually help, or just look cool)
-Storytelling
-Worldbuilding (could this exist in its own visual universe?)
-Consistency (per the Step 7 visual consistency check)
-Memorability
-Recognition Without Logo
-Differentiation (per the Competitive Differentiation Test)
-```
-- **< 8.5** → fail, return to Step 2.6.
-- **8.5–8.9** → good.
-- **9.0–9.4** → AKR quality.
-- **9.5+** → AKR signature quality.
-State the average and, if below 9.0, the single biggest reason why.
-
-## Step 9 — Write akr-design.md and confirm
-Before declaring done:
-1. Re-check output against Step 0's gathered requirements and, for full builds, the AKR Quality Gate score — not just "does it look cool."
-2. Create or update `akr-design.md` in the project's root (main tree). For every component pulled from an external source, record its **provenance**: source repo, source path, adaptation summary (what changed from the original), and dependencies added. Also document: the Step 2.5 concept summary, the World Engine's section list (required/optional/excluded, with reasons) and feature translations, the Typography System block, confidence level from Step 6, which taste-skill/AKR Visual DNA rules were applied, the AKR Score if run, and — if Step 8 ran — the SEO validation results. This file exists so the user and any AI reading the project later can cross-verify what happened and why, without re-deriving it from git history.
-3. Report the same summary briefly in chat, pointing to `akr-design.md` for detail. Don't over-explain in chat — the file holds the detail.
+## Before declaring done (every time)
+- `npm install`/`bun install` completes clean.
+- `npm run dev`/`bun run dev` boots, zero console errors, no missing imports/assets.
+- Every Step 0 requirement re-checked against final output.
+- VERIFY score ≥8.5, else still looping.
 
 ## Notes
-- AKR-Inspo is a personal moodboard, not a package — treat contents as reference to adapt, never import as-is.
-- If nothing in the repo fits, say so and build original UI instead of forcing a mismatch.
-- If repo structure changes, refresh the map by listing the root: `curl -s "https://api.github.com/repos/ajaykumarreddy-k/AKR-Inspo/contents/"`
-Infer Context: State it in one line: "Reading this as:  for ,  language, leaning toward ".
-
-Dual-mode: Open every page in light and dark, keep parity. Dark mode first by default.
-
-Rules: No pure #000000 / #ffffff. No neon glows or generic AI-slop signatures unless requested. WCAG AA minimum on body text.
-
-AKR Identity Layer: Apple-level spacing discipline, Google-Labs-style experimentation in interaction, brutalist restraint in ornamentation. Typography first, content before effects, motion only when it clarifies.
-
-AKR Visual DNA: Controlled asymmetry, intentional imperfection, editorial typography, storytelling layouts, object-based interfaces. Avoid empty glassmorphism, random gradients, bento-grid defaults, and decorative motion.
-
-Anti-SaaS Detection: Check for generic-SaaS fail conditions (e.g., standard 3-card feature grid, Vercel/Stripe lookalike > 60%). If triggered, return to Step 2.6.
-
-Step 2.5 — Concept Extraction & World Engine (MANDATORY)
-
-Skip only for single scoped component edits.
-
-Part A: Concept Extraction
-
-Extract and state explicitly:
-
-Product: 
-
-Audience: 
-
-Brand Personality: 
-
-Metaphor: 
-
-Narrative: <how the product's story plays out>
-
-Signature Object: <a recurring visual/interaction motif>
-
-Signature Interaction: 
-
-Visual Language: <typography/color/motion direction>
-
-Part B: AKR World Engine Pipeline
-
-Execute in exact order. This determines structure and content.
-
-World Audit: Check Step 2.5 concept. Clear metaphor? Narrative arc? Signature object? If vague, refine Concept Extraction first.
-
-World Logic Engine: Define World Rules, Vocabulary, Objects, Systems, and Relationships. Anything that breaks these rules gets rejected.
-
-World Ownership Test:
-
-Remove: Logo & Brand Name.
-
-Ask: Can this world belong to another product?
-
-YES → Refine metaphor (it is too generic).
-
-NO → Pass.
-
-Narrative Arc Engine:
-
-The user journey MUST follow: Introduction → Understanding → Exploration → Evaluation → Decision → Commitment.
-
-Map every section to a stage.
-
-If multiple sections perform the same stage: Merge or remove.
-
-Section Intelligence Matrix:
-
-Determine levels for: Trust, Conversion, Narrative, Community, Education, Complexity.
-
-Decide: Required Sections, Optional Sections, Forbidden Sections.
-
-For every section, ask: "Why does this exist?"
-
-If the honest answer is "Most websites have it" → Delete it.
-
-Section Ownership Test:
-
-For every required section ask: Could this section appear unchanged in a competitor product?
-
-YES → Redesign it to belong to this world.
-
-NO → Pass.
-
-Component Intelligence Engine:
-
-For every section, determine: Information Density, User Intent, Exploration Need, Trust Need, Conversion Need.
-
-Generate components accordingly.
-
-High Exploration → Interactive Maps, Visual Graphs, Explorers.
-
-High Trust → Evidence Components, Case Studies, Verification Systems.
-
-High Conversion → Decision Components, Comparison Systems, Action Panels.
-
-Never default to: Card Grid, Feature Grid, Testimonial Carousel.
-
-Component Ownership Test:
-
-For every component ask: Could this component appear inside another product unchanged?
-
-YES → Redesign.
-
-NO → Pass.
-
-(Catches generic cards, tables, and accordions)
-
-Pattern Translation Engine:
-
-Never import a generic section directly (e.g., Testimonials, Pricing, FAQ, Features, Comparison, Dashboard).
-
-Translate it into the world's language first.
-
-Examples:
-
-Forge World Testimonials → Architect Field Reports
-
-Space World Testimonials → Discovery Logs
-
-Music World Testimonials → Signal Echoes
-
-World Expansion & Feature Translation: Translate every generic feature into the world's vocabulary (e.g., Search → Scanner, Dashboard → Control Center). None ships in generic terms.
-
-Signature Interaction Engine:
-
-Generate one interaction users will remember.
-
-Ask: What interaction can only exist in this product?
-
-Prioritize: Understanding, Exploration, and Discovery over pure decoration.
-
-Signature Component Expansion:
-
-Every signature component MUST: Teach something, help navigation, improve understanding, or improve decision making.
-
-Reject: Cool looking decorative widgets that do none of the above.
-
-World Completion Test:
-
-Imagine this world is real. What is missing?
-
-Check for missing: Objects, Places, Tools, Archives, Systems, Experiences.
-
-Generate these missing elements.
-
-Experience Expansion: Fold the best 1-3 missing elements from the World Completion Test into the actual build plan.
-
-World Density Engine:
-
-The world MUST appear in: Hero, Navigation, Cards, Sections, Interactions, Loading States, Empty States, Footer, Microcopy.
-
-If the world only exists in the hero → FAIL. Pick 2-3 touchpoints and apply the world there.
-
-World Evolution Rule:
-
-The signature object MUST evolve throughout the experience (e.g., Raw Material → Blueprint → Assembly → Artifact).
-
-Never repeat the exact same representation everywhere.
-
-Signature Object Evolution Check:
-
-Track the signature object through the experience: Hero, Navigation, Sections, Interactions, Footer.
-
-If the object disappears for more than 2 sections → FAIL. (Prevents worlds from fading halfway down the page).
-
-Empty State Intelligence:
-
-Loading States, Empty States, and Error States MUST belong to the world.
-
-Example (NodeForge): "No package found" → "No artifacts detected in the forge."
-
-Footer Consistency Rule:
-
-The footer MUST continue the world's narrative.
-
-A generic link-list footer automatically fails visual consistency. Redesign it.
-
-Part C: Typography Intelligence System
-
-Strategy: Determine roles (Display, Body, Data, Utility) based on concept.
-
-Candidates: 2-3 pairings from existing brand, internal assets, or Fontjoy. Never blindly accept math-generated pairings.
-
-Score: Brand fit (40%), Readability (25%), Originality (15%), A11y (10%), Tech (10%). State pick and runner-up.
-
-Ownership Test: Strip logos/colors. Does the product feel distinctive from typography alone? If no, retry.
-
-Step 2.6 — Creative Exploration Engine
-
-Generate three directions before selecting a reference:
-
-Direction A (Safe): Conventional patterns.
-
-Direction B (Creative): Distinct visual language, low technical risk.
-
-Direction C (Experimental): Boldest interpretation of metaphor.
-
-Select winner: Do not default to Direction A unless explicitly requested. Priority is memorability. Run a Design Director Review (What feels generic? What feels expected?) to refine the chosen direction.
-
-Step 3 — Browse AKR-Inspo
-
-Never clone the whole repo. Use GitHub Contents API to browse only the needed subtree.
-
-React Only: Combine with reactbits.dev (DavidHDev/react-bits) for micro-animations/text/hover effects.
-
-Fallback: Use local cache, ask user for code, or build from rules. Do not stall.
-
-Step 4 — Map Request → Folder
-
-Buttons, cards, pricing, nav, footer: Components-maintiles/<Category>
-
-Framer/GSAP micro-interactions: Frammer&21st dev Components/
-
-Full site: Entire site/<Site Name>
-
-Scroll animations: Scroll animations/src
-
-3D text/WebGL: 3d text animations/good ones
-
-Design principles: Design md files/awesome-design-md/design-md
-
-React micro-interactions: DavidHDev/react-bits
-
-Scoring Candidates: Originality (30%), Visual fit (25%), Brand fit (20%), Tech fit (15%), A11y (10%).
-
-Step 5 & 6 — Read & State Confidence
-
-cat the matched component fully before touching the project.
-
-State Confidence:
-
-High (Exact match) → Proceed.
-
-Medium (Adaptation needed) → Flag adaptation, proceed.
-
-Low (No match/unclear) → STOP and ask.
-
-Step 7 — Implement Directly
-
-Detect stack and rewrite fetched code to match conventions.
-
-Install missing deps only if native APIs or existing deps can't handle it. Keep payload small.
-
-Target Lighthouse 90+, CLS < 0.1, LCP < 2.5s.
-
-Signature Design Requirement (Full Builds): Must land at least 3 signature components, 1 signature motion system, 1 signature illustration system, 1 signature interaction, and 1 signature storytelling mechanism.
-
-CRITICAL: Every page MUST contain at least one signature component. No page may rely entirely on generic components.
-
-Signature Object Persistence: The Step 2.5 object must appear throughout the experience, evolving but never disappearing.
-
-Visual Consistency Check: Every section must visibly belong to the same universe as the hero.
-
-Step 8 — SEO / AEO / GEO Compliance
-
-Trigger ONLY when explicitly requested.
-
-Findable: HTTPS; /robots.txt (allow GPTBot, ClaudeBot, PerplexityBot, Google-Extended); /sitemap.xml; Canonical <link>.
-
-Quotable: Meta descriptions (50-160 chars); ≥100 words real body text; Schema JSON-LD; FAQ schema only if real Q&A.
-
-Understandable: One descriptive <h1>; Clean hierarchy; OG tags; Alt text on ≥50% images.
-
-Trustworthy: ≥3 internal links; ≥2 outbound citation links; generate /llms.txt.
-
-Report validation plainly (✓ format).
-
-AKR Quality Gate (Full Builds Only)
-
-Run these checks in order, then score /10 (Average):
-
-Design Compression Test: Summarize product identity in one sentence.
-
-Section Uniqueness Test: Could a section be copied to another SaaS unmodified?
-
-Emotional Memory Test: What is remembered after 24hrs?
-
-First Impression Test: 3 seconds to know what/why/how it's different.
-
-Competitive Differentiation Test: What can users do here that they can't elsewhere?
-
-Interaction Ownership Test: Could a competitor claim the core interaction?
-
-Brand Recognition Without Logo.
-
-Scores: Originality, Usefulness, Storytelling, Worldbuilding, Consistency, Memorability, Logo-less Recognition, Differentiation.
-
-< 8.5 → FAIL, return to 2.6.
-
-9.0–9.4 → AKR Quality.
-
-9.5+ → AKR Signature.
-
-Step 9 — Write akr-design.md
-
-Create/update akr-design.md in the project root.
-
-Document: provenance (repo/path/adaptations) for fetched components, dependencies added, Step 2.5 concept summary, World Engine section list (required/optional/excluded + reasons), feature translations, Typography System block, Step 6 confidence, taste rules applied, AKR score, and SEO validation (if run).
-
-Report briefly in chat, point to the file for details.
-
-Notes
-
-AKR-Inspo is a personal moodboard, not a package — treat contents as reference to adapt, never import as-is.
-
-If nothing in the repo fits, say so and build original UI instead of forcing a mismatch.
-
-If repo structure changes, refresh the map by listing the root: curl -s "https://api.github.com/repos/ajaykumarreddy-k/AKR-Inspo/contents/"
+- AKR-Inspo and taste-skill are moodboards/rule sets, not packages — adapt, never import as-is.
+- Nothing fits → say so, build original.
+- Repo map stale → `curl -s "https://api.github.com/repos/ajaykumarreddy-k/AKR-Inspo/contents/"`.
