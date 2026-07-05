@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Inter', 'Google Sans', 'Product Sans', sans-serif;
+  --font-sans: 'DM Sans', 'Google Sans', 'Inter', sans-serif;
 }
 
 @layer base {
