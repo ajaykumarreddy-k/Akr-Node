@@ -1,0 +1,23 @@
+{
+  "name": "akr-design-perfection",
+  "version": "8.1.0",
+  "description": "AKR Design Perfection orchestration skill, bundled with the akr-design reference library.",
+  "entry_point": "SKILL.md",
+  "note": "SKILL.md and AKR-Designperfection-Skill.md at this level are identical — SKILL.md is the canonical entry point for AI skill loaders. The root Skill-Perfection/AKR-Designperfection-Skill.md is the installed/deployed copy.",
+  "bundled_library": "akr-design/",
+  "bundled_library_entry": "akr-design/SKILL.md",
+  "reference_files": [
+    "akr-design/references/accessibility.md",
+    "akr-design/references/anti-patterns.md",
+    "akr-design/references/asset-generation.md",
+    "akr-design/references/components.md",
+    "akr-design/references/design-tokens.md",
+    "akr-design/references/graphic-design-print.md",
+    "akr-design/references/mobile-responsive.md",
+    "akr-design/references/shadcn-components.md"
+  ],
+  "scripts": [
+    "akr-design/scripts/generate-app-icons.sh",
+    "akr-design/scripts/generate-favicons.sh"
+  ]
+}

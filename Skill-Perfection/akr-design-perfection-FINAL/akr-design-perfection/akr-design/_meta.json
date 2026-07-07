@@ -1,0 +1,16 @@
+{
+  "name": "akr-design",
+  "version": "1.0.0",
+  "description": "Unified design skill merging: frontend-design-pro, design-assets, design-system-creation, ui-ux-design, graphic-design, frontend-design-ultimate, ui-design, frontend-design (superdesign), and ui-ux-pro-max.",
+  "sources": [
+    "antonia-sz/frontend-design-pro",
+    "cmanfre7/design-assets",
+    "design-system-creation",
+    "itsjustdri/ui-ux-design",
+    "ivangdavila/graphic-design",
+    "kesslerio/frontend-design-ultimate",
+    "ui-design",
+    "mpociot/superdesign (frontend-design)",
+    "xobi667/ui-ux-pro-max"
+  ]
+}

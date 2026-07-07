@@ -75,16 +75,18 @@ This skill's AEO audit capabilities helped achieve a **perfect 100/100 AEO score
 
 ## ⚙️ Workflow Overview
 
-When invoked, the skill strictly follows these steps to prevent context-collapse and ensure quality:
+When invoked, the skill follows a closed **DISCOVER → PLAN → EXECUTE → VERIFY → DONE** loop:
 
-1. **Context First:** Safely scans the project structure, reads requirements, and extracts existing brand rules. *Never writes code without understanding the requirements.*
-2. **New Project Bootstrap:** During `bun create akr`, it scaffolds a runnable base template and injects a matching reference design and font pairing.
-3. **Design Taste Rules:** Applies the AKR Identity Layer (dark mode first, Apple-level spacing, WCAG AA minimum contrast).
-4. **Browse References:** Intelligently uses the GitHub Contents API to fetch required components from AKR-Inspo (or `DavidHDev/react-bits` for React).
-5. **Map & Adapt:** Maps user requests to component categories, then rewrites the fetched code to match your specific framework and styling conventions.
-6. **Implementation:** Integrates the code, keeping performance budgets strict (targeting Lighthouse 90+).
-7. **Discoverability (Opt-in):** If requested, implements SEO/AEO/GEO optimizations (`robots.txt`, `sitemap.xml`, `llms.txt`, Open Graph tags).
-8. **Documentation:** Finalizes by updating `akr-design.md` with provenance, adaptation summaries, and validation results.
+1. **Step 0 — Gate:** Scans project structure (depth 3), reads PRD/README. Asks if requirements are unclear. *Never writes code without understanding the requirements.*
+2. **Step 1 — Bootstrap:** During `bun create akr`, scaffolds a minimal runnable base and injects a matching reference design + font pairing.
+3. **Step 2 — Taste Rules:** Applies the AKR Identity Layer (dark mode first, Apple-level spacing, WCAG AA minimum). Runs the **AI-Slop Detector** + cross-checks `akr-design/references/anti-patterns.md`. Prints a Taste Checklist before proceeding.
+4. **Steps 2.5–2.6c — World Engine:** Mandatory for full builds. Derives: Concept → Brand Personality → Metaphor → Narrative → Signature Object → Section Intelligence → Component Intelligence → Typography → Palette → Design Tokens → Three Creative Directions. Picks the winner. No code until this is done.
+5. **Step 3 — Browse References:** Uses GitHub Contents API to fetch AKR-Inspo (layout/structure) + React Bits (micro-interactions). Checks bundled `akr-design/` library first — no fetch needed.
+6. **Steps 4–6 — Map, Read, Confidence:** Maps request to the right reference folder, reads matched component fully, states confidence level before touching the project.
+7. **Step 7 — Implement:** Integrates code reskinned to the winning palette+token system. Enforces: CSS specificity, copy quality, common-error grep, spacing rhythm, interaction states, density stress test. Performance budget: Lighthouse 90+, CLS<0.1, LCP<2.5s.
+8. **Step 8 — SEO/AEO/GEO (Opt-in only):** Implements robots.txt, sitemap.xml, llms.txt, JSON-LD, canonical tags, OG tags — only when explicitly requested.
+9. **VERIFY — Quality Gate:** Independent re-read of the built output. Scores 8 dimensions /10. Average <8.5 = not done, loop back to Step 2.6c with a genuinely new direction.
+10. **Step 9 — `akr-design.md`:** Finalizes by writing/updating `akr-design.md` at the project root — provenance, concept summary, section list, typography/palette systems, confidence level, VERIFY score, iteration count.
 
 ---
 
@@ -94,10 +96,11 @@ When multiple design sources or instructions conflict, the skill prioritizes in 
 
 1. 🥇 **Existing Project Codebase** (Don't break what works)
 2. 🥈 **Existing Brand / Design System**
-3. 🥉 **AKR-Inspo Component Library**
-4. 🏅 **React Bits Library**
-5. 🎖️ **Design Principles** (Taste-skill rules & awesome-design-md)
-6. 🛠️ **Original Implementation** (Build fresh if nothing fits)
+3. 🥉 **Bundled `akr-design/` Library** (tokens, anti-patterns, accessibility, components, mobile, graphic/print, asset scripts — always available, no fetch needed)
+4. 🏅 **AKR-Inspo Component Library** (GitHub Contents API, layout/structure reference)
+5. 🎖️ **React Bits Library** (micro-interactions, text/scroll/hover animations)
+6. 🏵️ **Taste-skill Rules** (`Leonxlnx/taste-skill`, deep design principles)
+7. 🛠️ **Original Implementation** (Build fresh if nothing fits)
 
 <br/>
 <p align="center">

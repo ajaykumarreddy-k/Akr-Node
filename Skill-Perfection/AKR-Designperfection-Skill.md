@@ -1,11 +1,17 @@
 ---
-name: akr-inspo-design
-version: 8.0.0
-last_updated: 2026-07-05
-description: "AKR-Inspo design skill: concept-first world-building UI generation with a closed verify/iterate loop. Pulls refs from AKR-Inspo repo + React Bits, applies taste-skill anti-slop rules, Color Hunt palettes, Fontjoy-assisted type pairing, and generates a reusable design token system. Concept→World→Typography→Palette→Tokens→Creative Exploration→Implement→Quality-Gate-Verify→Iterate→akr-design.md. Trigger: UI implementation, component gen, redesign, animation, scaffolding (bun create akr), explicit SEO/AEO/GEO. Do not trigger: design discussion, feedback-only, color-Q, plain debugging."
+name: akr-design-perfection
+version: 8.2.0
+last_updated: 2026-07-07
+description: "AKR Design Perfection: concept-first world-building UI generation with a closed verify/iterate loop, bundling the akr-design reference library (tokens, anti-patterns, accessibility, components, mobile, graphic/print, asset scripts) as its first-line design resource. Pulls refs from the bundled akr-design/ library + AKR-Inspo repo + React Bits + Frammer CSV index (2348 free Framer community components), applies taste-skill anti-slop rules, Color Hunt palettes, Fontjoy-assisted type pairing, and generates a reusable design token system. Concept→World→Typography→Palette→Tokens→Creative Exploration→Implement→Quality-Gate-Verify→Iterate→akr-design.md. Trigger: UI implementation, component gen, redesign, animation, scaffolding (bun create akr), explicit SEO/AEO/GEO. Do not trigger: design discussion, feedback-only, color-Q, plain debugging."
 ---
 
-# AKR-Inspo Design Skill
+# AKR Design Perfection
+
+This skill bundles the **`akr-design/`** library (design tokens, anti-pattern checklist,
+accessibility, component/shadcn/mobile-responsive references, graphic/print guidance, and
+icon/favicon scripts — see `akr-design/SKILL.md` for its own index) as the first-line resource
+throughout the loop below. It is consulted before external fetches (AKR-Inspo, React Bits,
+taste-skill, Fontjoy, Color Hunt) at every step that names it.
 
 ## Pre-Ship Hard Checklist (print filled-in, all ✓ required — any ✗ blocks shipping)
 - [ ] Font pairing — Style Library entry (or validated custom) named, not a default/system font left in place.
@@ -41,7 +47,7 @@ DISCOVER (Step 0-2) → PLAN (2.5-2.6) → EXECUTE (3-7) → VERIFY (Quality Gat
 
 Chain: `PRD → Audience → Brand Personality → Metaphor → Narrative → Visual Language → Signature Components → Layout → Implementation`.
 
-**Reference priority:** existing codebase > existing brand system > AKR-Inspo > React Bits > taste-skill/design-md rules > build fresh.
+**Reference priority:** existing codebase > existing brand system > bundled `akr-design/` library > AKR-Inspo > React Bits > taste-skill/design-md rules > build fresh.
 **Contamination guard:** ≥60% of final experience must trace to Step 2.5's concept, not to references.
 
 ---
@@ -70,13 +76,14 @@ Minimal runnable scaffold + placeholder content. Pick ONE moodboard ref (`assets
 ## Step 2 — Taste Rules + AKR Identity
 State: "Reading this as: `<page kind>` for `<audience>`, `<vibe>` language, `<aesthetic family>`."
 - Dual-mode (light+dark), parity kept. Dark mode first by default.
-- No pure `#000`/`#fff`. No neon/AI-slop unless asked. WCAG AA body text.
+- No pure `#000`/`#fff`. No neon/AI-slop unless asked. WCAG AA body text — full contrast/keyboard/ARIA detail in `akr-design/references/accessibility.md`.
 - **Identity:** Apple-level spacing, Google-Labs experimentation, brutalist restraint. Type first, motion only if clarifying.
 - **Visual DNA:** controlled asymmetry, editorial type, storytelling layout, object-based UI, layered depth. Avoid empty glassmorphism, random gradients, decorative motion, bento-by-default.
 - **AI-Slop Detector** — reject and redo if ANY apply: generic Inter/system-ui with no display font; purple-to-blue or pink-to-orange gradient hero; floating blurred gradient blobs in the background; unstyled default shadcn/Tailwind-UI card look; headline+subhead+two-button hero with no other identity; 3-icon feature grid (rocket/shield/lightning-bolt clichés); rounded-2xl cards + soft shadow on everything; emoji used as icons; numbered 01/02/03 markers where content isn't actually sequential; >~60% resemblance to Vercel/Stripe/Supabase/Clerk/Linear/Resend. Also flag the three current AI-design defaults unless the brief explicitly asks for one: (a) warm cream bg (~#F4F1EA) + high-contrast serif + terracotta accent, (b) near-black bg + single acid-green/vermilion accent, (c) broadsheet hairline-rule dense-column newspaper layout. Any hit → back to 2.6c, pick a different Style Library entry/direction.
 - **Restraint rule** — spend boldness in exactly one place (the signature element); keep everything else quiet and disciplined. Before finalizing, remove one accessory/flourish — if the design survives without it, it wasn't earning its place.
 - **Must print a Taste Checklist before Step 3**, one line per rule with pass/fix: dual-mode parity / no pure black-white / no neon-slop / WCAG AA / anti-SaaS check. A rule marked "fix" blocks moving on until resolved — don't silently skip it.
-- Full taste rule set: `github.com/Leonxlnx/taste-skill/tree/main/skills` — pull the `design-taste-frontend` skill folder for deeper rules (spacing systems, color theory, layout grids) whenever available; if the fetch fails or is unavailable, fall back to the summary above — never skip the Taste Checklist itself just because the deep-dive fetch failed. Browse via Contents API, don't clone.
+- Before any external fetch, cross-check the AI-Slop Detector list above against `akr-design/references/anti-patterns.md` (bundled, no fetch needed) — it's the same class of checklist and catches a few extras (touch targets, motion-property mistakes, copy anti-patterns).
+- Full taste rule set: `github.com/Leonxlnx/taste-skill/tree/main/skills` — pull the `design-taste-frontend` skill folder for deeper rules (spacing systems, color theory, layout grids) whenever available; if the fetch fails or is unavailable, fall back first to `akr-design/references/design-tokens.md` and `accessibility.md`, then to the summary above — never skip the Taste Checklist itself just because the deep-dive fetch failed. Browse via Contents API, don't clone.
 
 ---
 
@@ -92,6 +99,13 @@ Signature Interaction: <one interaction unique to this product>
 Visual Language: <type/color/motion direction>
 ```
 No implementation before this exists (skip only per Step 0 single-edit exception).
+
+**Metaphor Specificity Test (run immediately after printing the block above):**
+Ask: "Could another product in this category use this exact Metaphor + Signature Object?" If yes → the metaphor is too abstract. Sharpen with a concrete, world-specific twist before continuing. Test again. Don't proceed until the answer is no.
+
+Ban list — if the Metaphor reads like any of these, it's not specific enough:
+- "journey through data" / "explore your world" / "unlock possibilities" / "your command center"
+- Any metaphor where swapping the product name in still makes sense for a competitor.
 
 ## Step 2.5b — Layout Selection Engine (mandatory, full builds)
 Pick the structural bias from product type — this determines what the page leads with, not just what it contains:
@@ -187,7 +201,7 @@ Typography: --font-display/body/mono, --text-xs..5xl, --leading, --tracking
 Animation: --ease-standard/emphasized, --duration-fast/base/slow
 Grid:      --container-max, --gutter, breakpoints
 ```
-Values must derive from 2.6b/2.6b.2's picks, not generic Tailwind defaults left untouched. Write as actual CSS custom properties (or Tailwind theme config) in the project — every component in Step 7 consumes these tokens, none hardcodes a raw hex/px. This is what makes the output reusable/extendable, not a one-off. Record the full token block in `akr-design.md`.
+Values must derive from 2.6b/2.6b.2's picks, not generic Tailwind defaults left untouched. Write as actual CSS custom properties (or Tailwind theme config) in the project — every component in Step 7 consumes these tokens, none hardcodes a raw hex/px. Use `akr-design/references/design-tokens.md` for the three-layer (primitive/semantic/component) architecture, surface-layering, and CVA surface-component patterns — don't reinvent the layering scheme from scratch. This is what makes the output reusable/extendable, not a one-off. Record the full token block in `akr-design.md`.
 
 ---
 
@@ -199,7 +213,13 @@ Generate three directions (score originality/UX/memorability/brand fit/feasibili
 
 Pick winner (don't default to A unless brief explicitly wants conventional/enterprise-safe). **Design Director Review**: what's generic? what's expected? what would a top agency change? what's memorable at 6 months? Refine once.
 
-**Two-pass discipline:** Pass 1 — brainstorm a compact token system for the winning direction: Color (4–6 named hex values), Type (display/body/utility roles, per 2.6b), Layout (one-sentence concept + ASCII wireframe), Signature (one sentence: the single element this page will be remembered by). Pass 2 — critique that plan against the brief: does any part read like the generic default for this category rather than a choice made for this brief? Revise, state what changed and why. Only then write code, deriving every color/type decision from the revised plan. Take a screenshot after building and self-critique against this plan before calling it done.
+**Direction Sharpener (mandatory before picking winner):** Run each direction through this test:
+> "If I stripped the logo and brand name from this design, could a designer immediately tell it belongs to *this product* and no other?"
+- If A, B, and C all fail this → all three are too generic. Go back and push the concept further.
+- If B passes but barely → it's not creative enough. Merge B's boldest element with C's experimental read.
+- The winning direction must pass this test before any code is written. State the specific visual element that makes it ownable.
+
+**Two-pass discipline:** Pass 1 — brainstorm a compact token system for the winning direction: Color (4–6 named hex values), Type (display/body/utility roles, per 2.6b), Layout (one-sentence concept + ASCII wireframe), Signature (one sentence: the single element this page will be remembered by). Pass 2 — critique that plan against the brief: does any part read like the generic default for this category rather than a choice made for this brief? Revise, state what changed and why. Only then write code, deriving every color/type decision from the revised plan.
 
 ---
 
@@ -210,13 +230,22 @@ GitHub Contents API on subtrees only: `https://api.github.com/repos/ajaykumarred
 
 **React Bits** (`DavidHDev/react-bits`, React only) — combine with AKR-Inspo (AKR-Inspo=layout/structure, React Bits=text/scroll/hover micro-anim). Match variant (JS-CSS/JS-TW/TS-CSS/TS-TW) to project setup.
 
+**Post-browse contamination re-check (mandatory):** After selecting references from AKR-Inspo or React Bits, re-run the contamination guard:
+> "What percentage of the planned final experience traces to the Step 2.5 concept vs. the reference material?"
+- If references would drive >40% of the visual/structural experience → you've drifted. The references must serve the concept, not define it. Restate how each reference is being *adapted for this world*, not borrowed.
+- Never use a reference as the layout skeleton and treat the concept as decoration.
+
 ---
 
 ## Step 4 — Request → folder map
 | Want | Folder |
 |---|---|
+| Accessibility deep-dive (WCAG/ARIA/contrast/keyboard) | `akr-design/references/accessibility.md` (bundled) |
+| Component/shadcn/mobile-responsive patterns | `akr-design/references/components.md`, `shadcn-components.md`, `mobile-responsive.md` (bundled) |
+| Icon/favicon generation, image/palette scripts | `akr-design/references/asset-generation.md` + `akr-design/scripts/` (bundled) |
+| Logo/brand/print production, design critique by persona | `akr-design/references/graphic-design-print.md` (bundled) |
 | Buttons/cards/pricing/testimonials/nav/footer/CTA | `Components-maintiles/<Category>` |
-| Framer/GSAP micro-interactions | `Frammer&21st dev Components/<Effect>` |
+| Framer community components (interactions, buttons, backgrounds, carousels, typography, etc.) | **Frammer CSV** — see §Frammer section at end of this file; query `frammer-components.csv` by name/keyword, then use `copied_link` column |
 | Full landing page/site | `Entire site/<Site Name>` |
 | Scroll animation | `Scroll animations/src` |
 | 3D text/WebGL | `3d text animations/good ones` |
@@ -255,7 +284,11 @@ View matched component fully (code + co-located `.md`) before touching the proje
 7b. **Copy** — write from the user's side of the screen (name things by what people control, not system internals); active voice, same verb through a whole flow (button "Publish" → toast "Published"); errors state what happened + how to fix it, never vague or apologetic; empty states are an invitation to act, in the world's voice (per 2.6a #16). No filler, no generic template copy — copy is design material, not placeholder text.
 7c. **Common-error prevention (mandatory, run before declaring done)** — grep every new/edited file for identifiers used but not imported. Known repeat offenders: `cn`/`clsx`/`twMerge` utility (must import from `@/lib/utils` or equivalent, or write the 3-line fallback if no utils file exists), icon components (each used icon actually imported from its package), any hook (`useState`/`useEffect`/etc.) missing its import, path aliases (`@/...`) that don't resolve in `tsconfig`/`vite.config`. This is a static check, not "run it and see" — do it by reading the file, not by waiting for the browser to throw.
 7d. **Spacing rhythm** — section-to-section spacing must vary intentionally (e.g. Large/Medium/Large/Small/Large), never uniform Large/Large/Large/Large. Uniform spacing across every section is a fail.
-7e. **Interaction pattern library** (apply where it clarifies, keep subtle) — hover elevation, magnetic buttons, scroll reveal, stagger animations on lists, cursor-aware effects, section transitions. Don't stack all on one page — pick what the direction calls for (Step 2's motion-only-if-it-clarifies rule).
+
+7d.1. **Implementation self-critique (mandatory, not optional):** After building each major section, pause and re-read the code. Ask: "Does this section look like it belongs to a product that only exists in my concept, or could it live on any SaaS site?" If the honest answer is "any SaaS site" → revise before moving to the next section. Don't batch this at the end — catch slop as it's written.
+7e. **Interaction pattern library — mandatory Frammer check first.** Before building any interaction, button, background effect, animation, or cursor effect: open `frammer-components.csv` (or `Frammer/output/components.csv`) and search for a matching component by keyword. If a better or richer version exists in the CSV, extract the interaction concept and adapt it natively (don't import Frammer JS into non-Framer projects). Only build from scratch if nothing in the CSV matches the concept direction.
+
+Interaction library (apply where it clarifies, keep subtle): hover elevation, magnetic buttons, scroll reveal, stagger animations on lists, cursor-aware effects, section transitions. Don't stack all on one page — pick what the direction calls for (Step 2's motion-only-if-it-clarifies rule).
 7f. **Component state matrix** — every interactive component (buttons, cards, inputs, upload areas, nav items) must define default, hover, loading, active/focus states. A component with only a default state is incomplete.
 7g. **Content-density stress test** — before calling a section done, check it at low (~3 items), medium (~10), high (~25) content volume. A layout that only works at demo content-count is a fail — must reflow/paginate/scroll gracefully at all three.
 8. **Signature requirement (full builds)** — ≥3 signature components (each passing the 2.6a #12 teach/navigate/decide test), 1 signature motion system, 1 signature illustration system, 1 signature interaction, 1 signature storytelling mechanism — all from the Step 2.5 concept. Every page needs ≥1 signature component.
@@ -286,9 +319,16 @@ Re-read the built output fresh — don't reuse the reasoning that built it.
 7. Brand Recognition Without Logo.
 
 **Score /10 each, average:** Originality, Usefulness, Storytelling, Worldbuilding, Consistency, Memorability, Logo-less Recognition, Differentiation.
-- <8.5 → **ITERATE**: return to 2.6c with a genuinely new direction (not the same one restated), re-run EXECUTE, re-run VERIFY.
+
+**Minimum-dimension rule (in addition to average):** No single dimension may score below 7.0. A 9.5 average hiding a 5/10 Worldbuilding is a fail — the weak dimension must be fixed before shipping, regardless of average. Print each score individually, not just the average.
+
+- <8.5 average → **ITERATE**: return to 2.6c with a genuinely new direction (not the same one restated), re-run EXECUTE, re-run VERIFY.
+- Any dimension <7.0 → fix that dimension specifically before re-running VERIFY.
 - 8.5–8.9 good · 9.0–9.4 AKR quality · 9.5+ AKR signature.
+
 Print the average; if <9.0, print the single biggest reason why.
+
+**Self-screenshot mandate:** Before writing VERIFY scores, look at the built output as a new visitor would. State one thing that would make a designer stop scrolling and one thing that a competitor could still copy. If neither answer is specific, scores are inflated — reduce by 1 point across all dimensions and identify the actual memorable element.
 
 ---
 
@@ -312,6 +352,78 @@ Report briefly in chat, point to the file for detail.
 - VERIFY score ≥8.5, else still looping.
 
 ## Notes
+- `akr-design/` (bundled alongside this file) is a local library, not a fetch — always available, check it first per the reference-priority chain above.
 - AKR-Inspo and taste-skill are moodboards/rule sets, not packages — adapt, never import as-is.
 - Nothing fits → say so, build original.
 - Repo map stale → `curl -s "https://api.github.com/repos/ajaykumarreddy-k/AKR-Inspo/contents/"`.
+
+---
+
+## Frammer — Free Framer Community Component Index
+
+This skill bundles a scraped index of **2348 free Framer community marketplace components** from `framer.com/community/marketplace`.
+
+**CSV location (choose whichever is available):**
+- Primary: `Skill-Perfection/frammer-components.csv` (alongside this skill file)
+- Fallback: `Frammer/output/components.csv` (original scrape output)
+
+**CSV columns:** `name, category, component_url, copied_link, thumbnail_url, thumbnail_file, status`
+- `name` — display name of the component (e.g. `"3D Card Animation · Free Interactions Component"`)
+- `category` — always `"Categories"` (Framer's marketplace categorisation header)
+- `component_url` — Framer marketplace page (`https://www.framer.com/community/marketplace/components/<slug>/`)
+- `copied_link` — **the importable JS embed URL** (`https://framer.com/m/<ID>.js@<version>`) — this is what you use to reference or embed the component
+- `thumbnail_url` — remote preview image URL (for quick visual check)
+- `status` — `"Copied component [paste]"` = successfully scraped; `"copy failed"` = skip this row
+
+### How to query the Frammer index
+
+**Step 1 — Search by keyword in the CSV.**
+Look up the `name` column with keywords matching your need. Examples:
+- Want a scroll animation? → search `scroll`
+- Want a button interaction? → search `button` + `hover` or `animated`
+- Want a background effect? → search `background`, `gradient`, `noise`, `aurora`, `particle`
+- Want a 3D effect? → search `3d` or `3D`
+- Want a text reveal? → search `text reveal`, `typewriter`, `blur text`
+- Want a carousel? → search `carousel`, `slider`, `gallery`
+- Want a navigation component? → search `navbar`, `navigation`, `sidebar`
+- Want a preloader? → search `preloader`, `loader`, `screen`
+
+**Step 2 — Pick based on fit, not just keyword.**
+Filter rows where `status = "Copied component [paste]"` (ignore `copy failed` rows). Pick the best match for the concept from Step 2.5 — prefer components that align with the world metaphor over generic ones.
+
+**Step 3 — Get the embed link.**
+Use the `copied_link` value — it is the `framer.com/m/…` URL. This is the canonical embed/copy URL for that component.
+
+**Step 4 — Reference in skill output.**
+When using a Frammer component in your implementation, note it in the `akr-design.md` provenance block:
+```
+Frammer: <component name> — <copied_link> — adapted: <what changed>
+```
+
+### Frammer component categories (quick scan)
+
+Browse the CSV for these broad component families present in the index:
+
+| Theme | Example names in CSV |
+|---|---|
+| 3D & Depth effects | 3D Card Animation, 3D Hover Card, 3D Parallax Cards, 3D Button, 3D Flip Card, 3D Carousel Roll |
+| Animated backgrounds | Animated Gradient BG, Aurora WaveFX, Balatro Background, Bokeh Background, Cinematic background, Animated Noise, AmbientFX |
+| Text effects & typography | Animated Text Reveal, Blur Text Effect, Block Text Reveal, Cinematic Typewriter, Circular Text, Blend Text, Brutalist Text |
+| Buttons | 3D Tilt Button, Aura Button, Aurora Glass Button, Animated Hover btn, Border Glow, Chrome Button, Bracket Button |
+| Carousels & sliders | 3D Carousel Roll, Arc Focus Carousel, Canvas Slider, Capsule Slider, Card Deck Spread, Carousel 3D, CineReveal Carousel |
+| Interactions & cursors | Fluid Cursor, Butterfly Cursor, Blob Cursor Follow, 3D Magnetic element, Click Pop Effect, Burn Hover Reveal |
+| Navigation | Apple Navigation, Advanced Sidebar Nav, Auto Breadcrumb, Bottom Navigation, Circle Navigation, Aave Navigation Bar |
+| Cards & layouts | 3D Card Stack, Animated Card, Bento Gallery, BentoGlow Grid, Card Deck Tabs, Card Fan, Card Focus |
+| Loading & preloaders | Animated Loader Pro, Cinematic Preloaders, Bloop Preloader, Circular Preloader, AnimatedLogin |
+| Forms & inputs | Address Autocomplete, Advance Range Slider, Book a Call Button, CalcEngine Free, Bot Prevention Pro |
+| Data & charts | Bar Graph, Animated Stats Pro, AnimatedCounter, Circular Graph, ChartCard |
+| Audio & video | Ambient Video Player, Audio Waveform, Audio Reactor, AmbiLight Video, CD Music Player |
+| Scroll & reveal | Advanced Scroll Pro, Animated Text Reveal, Block Text Reveal, CinematicScroll, Clip Image |
+
+### Integration rule
+
+- **Frammer is a Framer-specific library** — components are `.js` Framer overrides, not React/Next components. Use them as-is in Framer projects, or extract the CSS/motion concepts and reimplement in your stack (React, Vanilla JS, etc.).
+- **Never import Frammer components directly into non-Framer projects** — adapt the interaction concept and rebuild it natively.
+- **Prioritise the Step 2.5 concept** — pick components that reinforce the world metaphor, never pick purely for technical novelty.
+- **Anti-slop guard** — animated gradient blobs (`Animated Gradient`, `AmbientFX`, etc.) are high slop risk per Step 2's AI-Slop Detector. Use only when the concept demands it and it passes the Restraint Rule.
+- **Contamination guard** — same ≥60% concept purity rule applies; Frammer components are reference material, not identity.
